@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Charity.Services\Charity.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\V1\Role\Commands\CreateRole\" />
+    <Folder Include="Features\V1\Role\Commands\DeleteRole\" />
+    <Folder Include="Features\V1\Role\Commands\UpdateRole\" />
+    <Folder Include="Features\V1\Role\Queries\GetAllRoles\" />
+    <Folder Include="Features\V1\Role\Queries\GetRoleById\" />
+    <Folder Include="Features\V1\User\Commands\DeleteUser\" />
+    <Folder Include="Features\V1\User\Commands\UpdateUser\" />
+    <Folder Include="Features\V1\User\Queries\GetAllUsers\" />
+    <Folder Include="Features\V1\User\Queries\GetUserById\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SharedResource.ar-EG.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>none</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SharedResource.resx">
+      <Generator>none</Generator>
+      <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
