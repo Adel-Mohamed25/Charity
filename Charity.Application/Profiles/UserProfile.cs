@@ -8,16 +8,24 @@ namespace Charity.Application.Mapper
     {
         public UserProfile()
         {
-            Mapp();
+            Map();
         }
 
-        private void Mapp()
+        private void Map()
         {
-            CreateMap<CreateUserModel, User>();
-            CreateMap<User, CreateUserModel>();
+            CreateMap<CharityUser, CreateUserModel>();
+            CreateMap<CreateUserModel, CharityUser>()
+                .ForMember(des => des.CreatedDate, opt => opt.MapFrom(src => DateTime.Now));
 
-            CreateMap<UserModel, User>();
-            CreateMap<User, UserModel>();
+            CreateMap<UserModel, CharityUser>();
+            CreateMap<CharityUser, UserModel>()
+                .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
+                    src.DateOfBirth.HasValue ? (int)((DateTime.UtcNow - src.DateOfBirth.Value).TotalDays / 365.25) : 0));
+
+            CreateMap<CharityUser, UpdateUserModel>();
+            CreateMap<UpdateUserModel, CharityUser>()
+                .ForMember(des => des.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now));
+
         }
     }
 }

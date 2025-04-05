@@ -1,5 +1,5 @@
 ﻿using Charity.Application.Helper.ResponseServices;
-using Charity.Contracts.ServicesAbstractions;
+using Charity.Contracts.ServicesAbstraction;
 using Charity.Models.Email;
 using Charity.Models.ResponseModels;
 using MediatR;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.Email.Commands.SendEmail
 {
-    public class SendEmailCommandHandler : IRequestHandler<SendEmailCommand, Response<EmailModel>>
+    public class SendEmailCommandHandler : IRequestHandler<SendEmailCommand, Response<SendEmailResponse>>
     {
         private readonly IUnitOfService _unitOfService;
         private readonly ILogger<SendEmailCommandHandler> _logger;
@@ -19,7 +19,7 @@ namespace Charity.Application.Features.V1.Email.Commands.SendEmail
             _logger = logger;
         }
 
-        public async Task<Response<EmailModel>> Handle(SendEmailCommand request, CancellationToken cancellationToken)
+        public async Task<Response<SendEmailResponse>> Handle(SendEmailCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace Charity.Application.Features.V1.Email.Commands.SendEmail
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occured during send email");
-                return ResponseHandler.Conflict<EmailModel>(errors: ex.Message);
+                return ResponseHandler.Conflict<SendEmailResponse>(errors: ex.Message);
             }
         }
     }

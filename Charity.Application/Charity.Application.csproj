@@ -11,18 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\V1\Role\Commands\CreateRole\" />
-    <Folder Include="Features\V1\Role\Commands\DeleteRole\" />
-    <Folder Include="Features\V1\Role\Commands\UpdateRole\" />
-    <Folder Include="Features\V1\Role\Queries\GetAllRoles\" />
-    <Folder Include="Features\V1\Role\Queries\GetRoleById\" />
-    <Folder Include="Features\V1\User\Commands\DeleteUser\" />
-    <Folder Include="Features\V1\User\Commands\UpdateUser\" />
-    <Folder Include="Features\V1\User\Queries\GetAllUsers\" />
-    <Folder Include="Features\V1\User\Queries\GetUserById\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />

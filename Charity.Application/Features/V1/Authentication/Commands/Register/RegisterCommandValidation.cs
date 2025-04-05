@@ -49,21 +49,22 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Register
               .NotNull().WithMessage("PhoneNumber can not be null.")
               .NotEmpty().WithMessage("PhoneNumber can not be empty.")
               .MinimumLength(11).WithMessage("PhoneNumber can not less than 11 characters.")
-              .MaximumLength(11).WithMessage("PhoneNumber can not exceed 11 characters.")
-              .MustAsync(IsPhoneNumberUnique).WithMessage("PhoneNumber already exists.");
+              .MaximumLength(11).WithMessage("PhoneNumber can not exceed 11 characters.");
 
 
             RuleFor(r => r.CreateUser.DateOfBirth)
-                .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("DateOfBirth cannot be in the future.");
+                .LessThanOrEqualTo(DateTime.Now).WithMessage("DateOfBirth cannot be in the future.");
 
-            RuleFor(r => r.CreateUser.CreatedDate)
-                .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("CreatedDate cannot be in the future.");
 
             RuleFor(r => r.CreateUser.Gender)
               .NotNull().WithMessage("Gender can not be null.")
               .NotEmpty().WithMessage("Gender can not be empty.")
               .IsInEnum().WithMessage("Invalid gender value. Allowed values are Male (1), Female (2).");
 
+            RuleFor(r => r.CreateUser.UserType)
+              .NotNull().WithMessage("UserType can not be null.")
+              .NotEmpty().WithMessage("UserType can not be empty.")
+              .IsInEnum().WithMessage("Invalid UserType value. Allowed values are Beneficiary (1), Volunteer (2), Donor (3), Admin (4).");
 
 
 
@@ -92,12 +93,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Register
 
         private async Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken)
         {
-            return !await _unitOfWork.Users.IsExistAsync(u => u.Email!.Equals(email), cancellationToken);
-        }
-
-        private async Task<bool> IsPhoneNumberUnique(string phoneNumber, CancellationToken cancellationToken)
-        {
-            return !await _unitOfWork.Users.IsExistAsync(u => u.PhoneNumber!.Equals(phoneNumber), cancellationToken);
+            return !await _unitOfWork.CharityUsers.IsExistAsync(u => u.Email!.Equals(email), cancellationToken);
         }
 
     }

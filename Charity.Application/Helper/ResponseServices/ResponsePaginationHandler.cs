@@ -52,6 +52,29 @@ namespace Charity.Application.Helper.ResponseServices
             );
         }
 
+        public static ResponsePagination<TData> BadRequest<TData>(
+            string message = null,
+            string meta = null,
+            string errors = null,
+            TData data = null,
+            int totalCount = 0,
+            int pageNumbre = 1,
+            int pageSize = 10) where TData : class
+        {
+            return new ResponsePagination<TData>(
+                statusCode: HttpStatusCode.BadRequest,
+                issucceeded: true,
+                message: message ?? ResponseMessage.BadRequestMessage,
+                meta: meta,
+                data: data,
+                errors: errors ?? "Bad Request",
+                totalCount: totalCount,
+                currentPage: pageNumbre,
+                pageSize: pageSize
+
+            );
+        }
+
 
     }
 }

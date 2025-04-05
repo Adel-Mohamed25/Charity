@@ -1,12 +1,12 @@
 ﻿using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
-using Charity.Contracts.ServicesAbstractions;
+using Charity.Contracts.ServicesAbstraction;
 using Charity.Models.Email;
 using Charity.Models.ResponseModels;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Charity.Application.Features.V1.Authentication.Commands.SendVerifyCode
+namespace Charity.Application.Features.V1.Authentication.Commands.GenerateVerifyCode
 {
     public class SendVerifyCodeCommandHandler : IRequestHandler<SendVerifyCodeCommand, Response<string>>
     {
@@ -26,13 +26,13 @@ namespace Charity.Application.Features.V1.Authentication.Commands.SendVerifyCode
         {
             try
             {
-                var user = await _unitOfWork.Users.UserManager.FindByEmailAsync(request.UserEmail.Email);
+                var user = await _unitOfWork.CharityUsers.UserManager.FindByEmailAsync(request.UserEmail.Email);
 
                 if (user is null)
                     return ResponseHandler.NotFound<string>(message: "User Not Found");
 
                 var code = await _unitOfService.AuthServices.GenerateVerificationCodeAsync(user);
-                await _unitOfService.EmailServices.SendEmailAsync(new SendEmailModel
+                var emailModel = new SendEmailRequest
                 {
                     To = request.UserEmail.Email,
                     Subject = "رمز التحقق الخاص بك من جمعية يد العطاء",
@@ -60,10 +60,12 @@ namespace Charity.Application.Features.V1.Authentication.Commands.SendVerifyCode
                                    <span style='font-size: 18px; color: #000;'>جمعية يد العطاء</span>
                                </p>
                            </div>"
+                };
 
-                });
-
-                return ResponseHandler.Success<string>(message: "Verification code sent successfully.");
+                var emaiModel = await _unitOfService.EmailServices.SendEmailAsync(emailModel);
+                if (emaiModel.IsSuccess)
+                    return ResponseHandler.Success<string>(message: "Verification code sent successfully.");
+                return ResponseHandler.Conflict<string>(message: "Failed to send confirmation email");
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 ﻿using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
-using Charity.Contracts.ServicesAbstractions;
+using Charity.Contracts.ServicesAbstraction;
 using Charity.Models.ResponseModels;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -25,19 +25,19 @@ namespace Charity.Application.Features.V1.Authentication.Commands.VerifyCode
         {
             try
             {
-                var user = await _unitOfWork.Users.UserManager.FindByEmailAsync(request.VerifyCode.Email);
+                var user = await _unitOfWork.CharityUsers.UserManager.FindByEmailAsync(request.VerifyCode.Email);
                 if (user == null)
                     return ResponseHandler.NotFound<string>(message: "User email not found.");
 
                 var isvaild = await _unitOfService.AuthServices.VerifyCodeAsync(user, request.VerifyCode.Code);
                 if (!isvaild)
-                    return ResponseHandler.BadRequest<string>(message: "verification code Not Vaild or incorrect");
+                    return ResponseHandler.BadRequest<string>(message: "Verification code not vaild.");
                 return ResponseHandler.Success<string>(message: "Verification code has been successfully verified.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occured during change password.");
-                return ResponseHandler.Conflict<String>(errors: ex.Message, message: "Error input data to confirm verification code.");
+                return ResponseHandler.BadRequest<String>(errors: ex.Message, message: "Error input data to confirm verification code.");
             }
         }
     }

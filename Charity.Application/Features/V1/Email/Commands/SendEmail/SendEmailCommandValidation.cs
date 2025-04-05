@@ -24,15 +24,11 @@ namespace Charity.Application.Features.V1.Email.Commands.SendEmail
                 .NotEmpty().WithMessage("Subject can not be empty.")
                 .MaximumLength(200).WithMessage("Subject can not exceed 200 characters.");
 
-            RuleFor(e => e.SendEmail.Body)
-                .NotNull().WithMessage("Body can not be null.")
-                .NotEmpty().WithMessage("Body can not be empty.");
-
             RuleFor(e => e.SendEmail.Attachments)
                 .Must(files => files == null || files.Count <= 5)
                 .WithMessage("You can only attach up to 5 files.")
-                .Must(files => files == null || files.All(file => file.Length <= 5 * 1024 * 1024))
-                .WithMessage("Each file must be 5MB or smaller.");
+                .Must(files => files == null || files.All(file => file.Length <= 2 * 1024 * 1024))
+                .WithMessage("Each file must be 2MB or smaller.");
 
         }
     }

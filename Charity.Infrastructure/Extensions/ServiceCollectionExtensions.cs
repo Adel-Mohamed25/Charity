@@ -1,8 +1,10 @@
 ﻿using Charity.Contracts.Repositories;
-using Charity.Contracts.RepositoryAbstractions.IdentityRepositories;
+using Charity.Contracts.RepositoriesAbstraction;
+using Charity.Contracts.RepositoriesAbstraction.IdentityRepositories;
 using Charity.Domain.Entities.IdentityEntities;
-using Charity.Infrastructure.Implementations.IdentityRepository;
 using Charity.Infrastructure.Repositories;
+using Charity.Infrastructure.RepositoriesImplementation;
+using Charity.Infrastructure.RepositoriesImplementation.IdentityRepository;
 using Charity.Infrastructure.Settings;
 using Charity.Persistence.Context;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +29,7 @@ namespace Charity.Infrastructure.Extensions
             #endregion
 
             #region Identity Settings 
-            services.AddIdentity<User, Role>(options =>
+            services.AddIdentity<CharityUser, CharityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
@@ -47,12 +49,22 @@ namespace Charity.Infrastructure.Extensions
             #region DI Settings
             services.AddScoped<ICharityDbContext, CharityDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICharityUserRepository, CharityUserRepository>();
             services.AddScoped<IJwtTokenRepository, JwtTokenRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<UserManager<User>>();
-            services.AddScoped<SignInManager<User>>();
-            services.AddScoped<RoleManager<Role>>();
+            services.AddScoped<ICharityRoleRepository, CharityRoleRepository>();
+            services.AddScoped<UserManager<CharityUser>>();
+            services.AddScoped<SignInManager<CharityUser>>();
+            services.AddScoped<RoleManager<CharityRole>>();
+            services.AddScoped<IAidDistributionRepository, AidDistributionRepository>();
+            services.AddScoped<IAssistanceRequestRepository, AssistanceRequestRepository>();
+            services.AddScoped<IInKindDonationRepository, InKindDonationRepository>();
+            services.AddScoped<IMonetaryDonationRepository, MonetaryDonationRepository>();
+            services.AddScoped<IVolunteerActivityRepository, VolunteerActivityRepository>();
+            services.AddScoped<IProjectVolunteerRepository, ProjectVolunteerRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IUserVolunteerActivityRepository, UserVolunteerActivityRepository>();
+            services.AddScoped<ICharityProjectRepository, CharityProjectRepository>();
+            services.AddScoped<IVolunteerApplicationRepository, VolunteerApplicationRepository>();
             #endregion
 
             #region Configuration Settings

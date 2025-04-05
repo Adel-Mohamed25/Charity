@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Charity.Persistence.Configurations.IdentityConfigurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class UserConfiguration : IEntityTypeConfiguration<CharityUser>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<CharityUser> builder)
         {
             builder.HasKey(u => u.Id);
 
@@ -23,7 +23,7 @@ namespace Charity.Persistence.Configurations.IdentityConfigurations
 
             builder.Property(u => u.Address)
                 .HasMaxLength(200)
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(u => u.PhoneNumber)
                 .IsRequired();
@@ -31,7 +31,7 @@ namespace Charity.Persistence.Configurations.IdentityConfigurations
             builder.Property(u => u.Email)
                 .IsRequired();
 
-            builder.Property(u => u.Image)
+            builder.Property(u => u.ImageUrl)
                 .HasMaxLength(500)
                 .IsRequired(false);
 
@@ -44,9 +44,14 @@ namespace Charity.Persistence.Configurations.IdentityConfigurations
                 .HasConversion(u => u.ToString(),
                 u => Enum.Parse<GenderType>(u));
 
+            builder.Property(u => u.UserType)
+                .IsRequired()
+                .HasConversion(u => u.ToString(),
+                u => Enum.Parse<UserRole>(u));
 
 
-            builder.ToTable("Users");
+
+            builder.ToTable("CharityUsers");
         }
     }
 }

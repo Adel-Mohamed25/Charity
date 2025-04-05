@@ -1,6 +1,6 @@
-﻿using Charity.Contracts.ServicesAbstractions;
+﻿using Charity.Contracts.ServicesAbstraction;
 using Charity.Infrastructure.Settings;
-using Charity.Services.Implementations;
+using Charity.Services.ServicesImplementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +42,34 @@ namespace Charity.Services.Extensions
             });
             #endregion
 
+            #region Add Google Authentication 
+            var googleSection = configuration.GetSection($"Authentication:{nameof(GoogleSettings)}");
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = googleSection.GetValue<string>($"{nameof(GoogleSettings.ClientId)}")
+                ?? throw new InvalidOperationException("ClientId is missing");
+
+                options.ClientSecret = googleSection.GetValue<string>($"{nameof(GoogleSettings.ClientSecret)}")
+                ?? throw new InvalidOperationException("ClientSecret is missing");
+
+                options.CallbackPath = "/signin-google";
+            });
+            #endregion
+
+            #region Add Facebook Authentication 
+            //var facebookSection = configuration.GetSection($"Authentication:{nameof(FacebookSettings)}");
+            //services.AddAuthentication().AddFacebook(options =>
+            //{
+            //    options.AppId = facebookSection.GetValue<string>($"{nameof(FacebookSettings.AppId)}")
+            //        ?? throw new InvalidOperationException("AppId is missing");
+
+            //    options.AppSecret = facebookSection.GetValue<string>($"{nameof(FacebookSettings.AppSecret)}")
+            //        ?? throw new InvalidOperationException("AppSecret is missing");
+
+            //    options.CallbackPath = "/signin-facebook";
+            //});
+            #endregion
+
             #region Configure Swagger with JWT Authentication and able to read version correctly
             services.AddSwaggerGen(options =>
             {
@@ -72,15 +100,19 @@ namespace Charity.Services.Extensions
                     }
                 });
             });
-
             #endregion
 
 
+            #region DI Settings
             services.AddScoped<IUnitOfService, UnitOfService>();
             services.AddScoped<IUnitOfServices, AuthServices>();
             services.AddScoped<IFileServices, FileServices>();
             services.AddScoped<IEmailServices, EmailServices>();
+            services.AddScoped<INotificationServices, NotificationServices>();
+            services.AddScoped<IProjectVolunteerServices, ProjectVolunteerServices>();
+            services.AddScoped<IUserVolunteerActivityServices, UserVolunteerActivityServices>();
             services.AddHttpContextAccessor();
+            #endregion
 
             return services;
         }

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Charity.Application.Features.V1.Authentication.Commands.SendVerifyCode
+namespace Charity.Application.Features.V1.Authentication.Commands.GenerateVerifyCode
 {
     public class SendVerifyCodeCommandValidation : AbstractValidator<SendVerifyCodeCommand>
     {

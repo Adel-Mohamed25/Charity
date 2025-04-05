@@ -29,6 +29,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\InKindDonationImages\" />
+    <Folder Include="wwwroot\UsersImages\" />
   </ItemGroup>
 
 </Project>

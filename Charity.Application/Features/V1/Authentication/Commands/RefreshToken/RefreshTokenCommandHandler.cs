@@ -1,6 +1,6 @@
 ﻿using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
-using Charity.Contracts.ServicesAbstractions;
+using Charity.Contracts.ServicesAbstraction;
 using Charity.Models.Authentication;
 using Charity.Models.ResponseModels;
 using MediatR;

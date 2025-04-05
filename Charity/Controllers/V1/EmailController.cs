@@ -1,4 +1,5 @@
-﻿using Charity.Application.Features.V1.Email.Commands.SendEmail;
+﻿using Charity.Api.Controllers.Common;
+using Charity.Application.Features.V1.Email.Commands.SendEmail;
 using Charity.Models.Email;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,7 @@ namespace Charity.API.Controllers.V1
     public class EmailController : BaseApiController
     {
         [HttpPost("SendEmail")]
-        public async Task<IActionResult> SendEmail([FromBody] SendEmailModel sendEmail)
+        public async Task<IActionResult> SendEmail([FromForm] SendEmailRequest sendEmail)
         {
             return NewResult(await Mediator.Send(new SendEmailCommand(sendEmail)));
         }

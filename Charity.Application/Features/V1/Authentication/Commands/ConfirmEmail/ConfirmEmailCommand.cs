@@ -1,8 +1,8 @@
 ﻿using Charity.Models.Email;
-using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Charity.Application.Features.V1.Authentication.Commands.ConfirmEmail
 {
-    public record ConfirmEmailCommand(EmailConfirmationRequest EmailConfirmation) : IRequest<Response<EmailConfirmationResponse>>;
+    public record ConfirmEmailCommand(EmailConfirmationRequest EmailConfirmation) : IRequest<IActionResult>;
 }

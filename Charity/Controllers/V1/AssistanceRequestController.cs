@@ -1,0 +1,56 @@
+﻿using Charity.Api.Controllers.Common;
+using Charity.Application.Features.V1.AssistanceRequests.Commands.CreateAssistanceRequest;
+using Charity.Application.Features.V1.AssistanceRequests.Commands.DeleteAssistanceRequest;
+using Charity.Application.Features.V1.AssistanceRequests.Commands.UpdateAssistanceRequest;
+using Charity.Application.Features.V1.AssistanceRequests.Queries.GetAllAssistanceRequests;
+using Charity.Application.Features.V1.AssistanceRequests.Queries.GetAssistanceRequestById;
+using Charity.Application.Features.V1.AssistanceRequests.Queries.GetPaginatedAssistanceRequests;
+using Charity.Models.AssistanceRequest;
+using Charity.Models.ResponseModels;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Charity.Api.Controllers.V1
+{
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    public class AssistanceRequestController : BaseApiController
+    {
+        [HttpPost("CreateAssistanceRequest")]
+        public async Task<IActionResult> CreateAssistanceRequest([FromBody] CreateAssistanceRequestModel createAssistance)
+        {
+            return NewResult(await Mediator.Send(new CreateAssistanceRequestCommand(createAssistance)));
+        }
+
+        [HttpPut("UpdateAssistanceRequest")]
+        public async Task<IActionResult> UpdateAssistanceRequest([FromBody] AssistanceRequestModel assistanceRequest)
+        {
+            return NewResult(await Mediator.Send(new UpdateAssistanceRequestCommand(assistanceRequest)));
+        }
+
+        [HttpDelete("DeleteAssistanceRequest")]
+        public async Task<IActionResult> DeleteAssistanceRequest([FromQuery] string id)
+        {
+            return NewResult(await Mediator.Send(new DeleteAssistanceRequestCommand(id)));
+        }
+
+        [HttpGet("GetAllAssistanceRequests")]
+        public async Task<IActionResult> GetAllAssistanceRequests()
+        {
+            return NewResult(await Mediator.Send(new GetAllAssistanceRequestsQuery()));
+        }
+
+        [HttpGet("GetPaginatedAssistanceRequests")]
+        public async Task<IActionResult> GetPaginatedAssistanceRequests([FromQuery] PaginationModel pagination)
+        {
+            return NewResult(await Mediator.Send(new GetPaginatedAssistanceRequestsQuery(pagination)));
+        }
+
+        [HttpGet("GetAssistanceRequestById")]
+        public async Task<IActionResult> GetAssistanceRequestById([FromQuery] string id)
+        {
+            return NewResult(await Mediator.Send(new GetAssistanceRequestByIdQuery(id)));
+        }
+
+    }
+}

@@ -1,6 +1,6 @@
 ﻿using Charity.Contracts.Repositories;
 using Charity.Domain.Entities.IdentityEntities;
-using Charity.Infrastructure.Constans;
+using Charity.Domain.Enum;
 
 namespace Charity.Infrastructure.Seeds
 {
@@ -8,11 +8,13 @@ namespace Charity.Infrastructure.Seeds
     {
         public static async Task SeedAsync(IUnitOfWork unitOfWork)
         {
-            if (!await unitOfWork.Roles.IsExistAsync())
+            if (!await unitOfWork.CharityRoles.IsExistAsync())
             {
-                await unitOfWork.Roles.RoleManager.CreateAsync(new Role { Name = Roles.SuperAdmin.ToString() });
-                await unitOfWork.Roles.RoleManager.CreateAsync(new Role { Name = Roles.Admin.ToString() });
-                await unitOfWork.Roles.RoleManager.CreateAsync(new Role { Name = Roles.Basic.ToString() });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.SuperAdmin.ToString() });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.Admin.ToString() });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.Beneficiary.ToString() });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.Donor.ToString() });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.Volunteer.ToString() });
             }
         }
     }

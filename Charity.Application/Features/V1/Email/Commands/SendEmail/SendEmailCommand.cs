@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Charity.Application.Features.V1.Email.Commands.SendEmail
 {
-    public record SendEmailCommand(SendEmailModel SendEmail) : IRequest<Response<EmailModel>>;
+    public record SendEmailCommand(SendEmailRequest SendEmail) : IRequest<Response<SendEmailResponse>>;
 }

@@ -1,6 +1,6 @@
 ﻿using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
-using Charity.Contracts.ServicesAbstractions;
+using Charity.Contracts.ServicesAbstraction;
 using Charity.Models.Authentication;
 using Charity.Models.ResponseModels;
 using MediatR;
@@ -51,35 +51,35 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Login
                 _logger.LogInformation($"Host Name: {hostEntry.HostName}");
                 #endregion
 
-                var findUser = await _unitOfWork.Users.UserManager.FindByEmailAsync(request.loginModel.Email);
+                var findUser = await _unitOfWork.CharityUsers.UserManager.FindByEmailAsync(request.loginModel.Email);
                 if (findUser == null)
                     return ResponseHandler.NotFound<AuthModel>(errors: "User not found");
 
-                if (await _unitOfWork.Users.UserManager.IsLockedOutAsync(findUser))
+                if (await _unitOfWork.CharityUsers.UserManager.IsLockedOutAsync(findUser))
                 {
                     _logger.LogWarning($"User {findUser.Email} attempted to login but is locked out.");
                     return ResponseHandler.BadRequest<AuthModel>(errors: "Your account is locked. Please contact support if you need assistance.");
                 }
 
-                bool isPasswordCorrect = await _unitOfWork.Users.UserManager.CheckPasswordAsync(findUser, request.loginModel.Password);
+                bool isPasswordCorrect = await _unitOfWork.CharityUsers.UserManager.CheckPasswordAsync(findUser, request.loginModel.Password);
 
                 if (!isPasswordCorrect)
                 {
-                    await _unitOfWork.Users.UserManager.AccessFailedAsync(findUser);
+                    await _unitOfWork.CharityUsers.UserManager.AccessFailedAsync(findUser);
 
-                    if (await _unitOfWork.Users.UserManager.IsLockedOutAsync(findUser))
+                    if (await _unitOfWork.CharityUsers.UserManager.IsLockedOutAsync(findUser))
                     {
                         _logger.LogWarning($"User {findUser.Email} has been locked out due to multiple failed attempts.");
-                        return ResponseHandler.BadRequest<AuthModel>(errors: "Your account has been locked due to multiple failed login attempts. Try again in 5 minutes or contact support if you need assistance.");
+                        return ResponseHandler.Conflict<AuthModel>(errors: "Your account has been locked due to multiple failed login attempts. Try again in 5 minutes or contact support if you need assistance.");
                     }
 
                     return ResponseHandler.BadRequest<AuthModel>(errors: "Incorrect email or password");
                 }
 
 
-                await _unitOfWork.Users.UserManager.ResetAccessFailedCountAsync(findUser);
+                await _unitOfWork.CharityUsers.UserManager.ResetAccessFailedCountAsync(findUser);
 
-                var user = await _unitOfWork.Users.GetByAsync(
+                var user = await _unitOfWork.CharityUsers.GetByAsync(
                    mandatoryFilter: u => u.Id == findUser.Id,
                    cancellationToken: cancellationToken,
                    includes: $"{nameof(findUser.JwtTokens)}"
@@ -91,7 +91,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Login
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occured during user login.");
-                return ResponseHandler.Conflict<AuthModel>(errors: ex.Message);
+                return ResponseHandler.BadRequest<AuthModel>(errors: ex.Message);
             }
         }
     }

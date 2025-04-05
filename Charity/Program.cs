@@ -3,6 +3,7 @@ using Charity.Application.Extensions;
 using Charity.Application.MiddleWares;
 using Charity.Contracts.Repositories;
 using Charity.Infrastructure.Extensions;
+using Charity.Infrastructure.Seeds;
 using Charity.Services.Extensions;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -90,6 +91,27 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseCors("AllowSpecificOrigins");
+
+await using (var scop = app.Services.CreateAsyncScope())
+{
+    var services = scop.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    var logger = loggerFactory.CreateLogger("app");
+    try
+    {
+        var unitOfWork = services.GetRequiredService<IUnitOfWork>();
+        await RolesSeeder.SeedAsync(unitOfWork);
+        await UsersSeeder.SeedSuperAdminUserAsync(unitOfWork);
+        await UsersSeeder.SeedAdminUserAsync(unitOfWork);
+
+        //logger.LogInformation("Finished Seeding Default Data");
+        //logger.LogInformation("Application Starting");
+    }
+    catch (Exception ex)
+    {
+        logger.LogWarning(ex, "An error occurred seeding the DB");
+    }
+}
 
 //Data Seeder 
 await using (var scop = app.Services.CreateAsyncScope())

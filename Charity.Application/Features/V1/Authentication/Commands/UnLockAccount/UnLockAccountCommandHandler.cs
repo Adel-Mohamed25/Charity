@@ -21,17 +21,17 @@ namespace Charity.Application.Features.V1.Authentication.Commands.UnLockAccount
         {
             try
             {
-                var user = await _unitOfWork.Users.UserManager.FindByEmailAsync(request.UserEmail.Email);
+                var user = await _unitOfWork.CharityUsers.UserManager.FindByEmailAsync(request.UserEmail.Email);
                 if (user == null)
                     return ResponseHandler.NotFound<string>(errors: "User not found.");
-                await _unitOfWork.Users.UserManager.SetLockoutEndDateAsync(user, DateTime.UtcNow);
-                await _unitOfWork.Users.UserManager.ResetAccessFailedCountAsync(user);
+                await _unitOfWork.CharityUsers.UserManager.SetLockoutEndDateAsync(user, DateTime.UtcNow);
+                await _unitOfWork.CharityUsers.UserManager.ResetAccessFailedCountAsync(user);
                 return ResponseHandler.Success<string>(message: "User account has been successfully unlocked.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occured during unlock account.");
-                return ResponseHandler.Conflict<string>(errors: ex.Message);
+                return ResponseHandler.BadRequest<string>(errors: ex.Message);
             }
         }
     }
