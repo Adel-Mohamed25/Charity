@@ -31,7 +31,7 @@ namespace Charity.Application.Features.V1.User.Commands.UpdateUser
         {
             try
             {
-                var user = await _unitOfWork.CharityUsers.UserManager.FindByIdAsync(request.Id);
+                var user = await _unitOfWork.CharityUsers.UserManager.FindByIdAsync(request.UpdateUser.Id);
                 if (user is null)
                     return ResponseHandler.NotFound<string>(message: "User Not Found.");
 

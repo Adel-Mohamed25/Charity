@@ -76,8 +76,6 @@ namespace Charity.Application.Features.V1.Authentication.Commands.ExternalLoginC
                             FirstName = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.GivenName) ?? "",
                             LastName = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Surname) ?? "",
                             Email = email,
-                            UserType = UserRole.Beneficiary,
-                            PhoneNumber = "01143254939",
                         };
 
                         var convertUser = _mapper.Map<CharityUser>(newUser);

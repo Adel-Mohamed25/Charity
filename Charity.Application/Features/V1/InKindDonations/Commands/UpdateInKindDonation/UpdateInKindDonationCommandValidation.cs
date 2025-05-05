@@ -26,6 +26,11 @@ namespace Charity.Application.Features.V1.InKindDonations.Commands.UpdateInKindD
                 .NotEmpty().WithMessage(ik => $"{nameof(ik.UpdateInKindDonation.ItemType)} can not be empty.")
                 .IsInEnum().WithMessage(ik => $"Invalid {nameof(ik.UpdateInKindDonation.ItemType)} value. Allowed values are (1) Clothes, (2) Food, (3) Medical Supplies, (4) Other.");
 
+            RuleFor(ik => ik.UpdateInKindDonation.DonationStatus)
+                .NotNull().WithMessage(ik => $"{nameof(ik.UpdateInKindDonation.DonationStatus)} can not be null.")
+                .NotEmpty().WithMessage(ik => $"{nameof(ik.UpdateInKindDonation.DonationStatus)} can not be empty.")
+                .IsInEnum().WithMessage(ik => $"Invalid {nameof(ik.UpdateInKindDonation.DonationStatus)} value. Allowed values are (1) New, (2) UsedExcellentCondition, (3) UsedGoodCondition.");
+
 
             RuleFor(ik => ik.UpdateInKindDonation.Quantity)
                 .NotNull().WithMessage(ik => $"{nameof(ik.UpdateInKindDonation.Quantity)} can not be null.")

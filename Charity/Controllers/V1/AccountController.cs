@@ -36,10 +36,10 @@ namespace Charity.API.Controllers.V1
         }
 
         [HttpGet("ExternalLogin")]
-        public async Task<IActionResult> ExternalLogin([FromQuery] string provider)
+        public async Task<IActionResult> ExternalLogin()
         {
-            var properties = await Mediator.Send(new ExternalLoginCommand(provider, Url.Action(nameof(GoogleLoginCallback))));
-            return Challenge(properties.Data!, provider);
+            var properties = await Mediator.Send(new ExternalLoginCommand("Google", Url.Action(nameof(GoogleLoginCallback))));
+            return Challenge(properties.Data!, "Google");
         }
 
         [HttpGet("GoogleLoginCallback")]

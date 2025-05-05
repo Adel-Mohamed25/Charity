@@ -2,6 +2,7 @@
 using Charity.Infrastructure.Settings;
 using Charity.Services.ServicesImplementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -52,7 +53,7 @@ namespace Charity.Services.Extensions
                 options.ClientSecret = googleSection.GetValue<string>($"{nameof(GoogleSettings.ClientSecret)}")
                 ?? throw new InvalidOperationException("ClientSecret is missing");
 
-                options.CallbackPath = "/signin-google";
+                options.CallbackPath = new PathString("/api/v1/Account/GoogleLoginCallback");
             });
             #endregion
 
@@ -108,9 +109,8 @@ namespace Charity.Services.Extensions
             services.AddScoped<IUnitOfServices, AuthServices>();
             services.AddScoped<IFileServices, FileServices>();
             services.AddScoped<IEmailServices, EmailServices>();
+            services.AddScoped<IPaymentServices, PaymentServices>();
             services.AddScoped<INotificationServices, NotificationServices>();
-            services.AddScoped<IProjectVolunteerServices, ProjectVolunteerServices>();
-            services.AddScoped<IUserVolunteerActivityServices, UserVolunteerActivityServices>();
             services.AddHttpContextAccessor();
             #endregion
 

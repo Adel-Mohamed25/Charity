@@ -8,10 +8,10 @@ namespace Charity.Domain.Entities
         public override string Id { get; set; } = Guid.NewGuid().ToString();
         public string SenderId { get; set; }
         public CharityUser Sender { get; set; }
+        public string? ReceiverId { get; set; }
+        public CharityUser? Receiver { get; set; }
+        public string? Message { get; set; }
+        public bool IsRead { get; set; }
 
-        public string Title { get; set; }
-        public string Message { get; set; }
-
-        public ICollection<UserNotification> UserNotifications { get; set; } = new List<UserNotification>();
     }
 }

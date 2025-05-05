@@ -15,8 +15,6 @@ namespace Charity.Models.User
         public DateTime? DateOfBirth { get; set; }
         public int Age { get; set; }
         public GenderType Gender { get; set; }
-        public UserRole UserType { get; set; }
-
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
     }

@@ -248,7 +248,6 @@ namespace Charity.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
@@ -263,10 +262,6 @@ namespace Charity.Persistence.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("UserType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -334,6 +329,10 @@ namespace Charity.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonationStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -418,22 +417,25 @@ namespace Charity.Persistence.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Message")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("SenderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
@@ -456,24 +458,6 @@ namespace Charity.Persistence.Migrations
                     b.HasIndex("VolunteerId");
 
                     b.ToTable("ProjectVolunteers", (string)null);
-                });
-
-            modelBuilder.Entity("Charity.Domain.Entities.UserNotification", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("NotificationId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.HasKey("UserId", "NotificationId");
-
-                    b.HasIndex("NotificationId");
-
-                    b.ToTable("UserNotifications", (string)null);
                 });
 
             modelBuilder.Entity("Charity.Domain.Entities.UserVolunteerActivity", b =>
@@ -776,11 +760,18 @@ namespace Charity.Persistence.Migrations
 
             modelBuilder.Entity("Charity.Domain.Entities.Notification", b =>
                 {
+                    b.HasOne("Charity.Domain.Entities.IdentityEntities.CharityUser", "Receiver")
+                        .WithMany("ReceivedNotifications")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Charity.Domain.Entities.IdentityEntities.CharityUser", "Sender")
                         .WithMany("SentNotifications")
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Receiver");
 
                     b.Navigation("Sender");
                 });
@@ -802,25 +793,6 @@ namespace Charity.Persistence.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Volunteer");
-                });
-
-            modelBuilder.Entity("Charity.Domain.Entities.UserNotification", b =>
-                {
-                    b.HasOne("Charity.Domain.Entities.Notification", "Notification")
-                        .WithMany("UserNotifications")
-                        .HasForeignKey("NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Charity.Domain.Entities.IdentityEntities.CharityUser", "User")
-                        .WithMany("ReceivedNotifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Notification");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Charity.Domain.Entities.UserVolunteerActivity", b =>
@@ -979,11 +951,6 @@ namespace Charity.Persistence.Migrations
             modelBuilder.Entity("Charity.Domain.Entities.MonetaryDonation", b =>
                 {
                     b.Navigation("AidDistributions");
-                });
-
-            modelBuilder.Entity("Charity.Domain.Entities.Notification", b =>
-                {
-                    b.Navigation("UserNotifications");
                 });
 
             modelBuilder.Entity("Charity.Domain.Entities.VolunteerActivity", b =>

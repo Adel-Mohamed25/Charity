@@ -25,7 +25,6 @@ namespace Charity.Persistence.Context
         public DbSet<CharityProject> CharityProjects { get; set; }
         public DbSet<ProjectVolunteer> ProjectVolunteers { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<UserNotification> UserNotifications { get; set; }
         public DbSet<VolunteerApplication> VolunteerApplications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

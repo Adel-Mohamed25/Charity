@@ -9,6 +9,7 @@ namespace Charity.Domain.Entities
         public override string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public DonationItemType ItemType { get; set; } // "Clothes", "Food", "Medical Supplies"
+        public DonationStatus DonationStatus { get; set; }  // "New", "UsedExcellentCondition", "UsedGoodCondition"
         public string Description { get; set; }
         public int Quantity { get; set; }
         public IList<string>? ImageUrls { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Charity.Contracts.ServicesAbstraction
 {
-    public interface IProjectVolunteerServices
+    public interface IPaymentServices
     {
     }
 }

@@ -26,7 +26,7 @@ namespace Charity.Persistence.Configurations.IdentityConfigurations
                 .IsRequired(false);
 
             builder.Property(u => u.PhoneNumber)
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(u => u.Email)
                 .IsRequired();
@@ -43,13 +43,6 @@ namespace Charity.Persistence.Configurations.IdentityConfigurations
                 .IsRequired()
                 .HasConversion(u => u.ToString(),
                 u => Enum.Parse<GenderType>(u));
-
-            builder.Property(u => u.UserType)
-                .IsRequired()
-                .HasConversion(u => u.ToString(),
-                u => Enum.Parse<UserRole>(u));
-
-
 
             builder.ToTable("CharityUsers");
         }

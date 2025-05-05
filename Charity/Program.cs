@@ -1,8 +1,8 @@
-using Charity.API.Hubs;
 using Charity.Application.Extensions;
 using Charity.Application.MiddleWares;
 using Charity.Contracts.Repositories;
 using Charity.Infrastructure.Extensions;
+using Charity.Infrastructure.Hubs;
 using Charity.Infrastructure.Seeds;
 using Charity.Services.Extensions;
 using Microsoft.AspNetCore.Localization;
@@ -130,13 +130,15 @@ await using (var scop = app.Services.CreateAsyncScope())
     }
 }
 
-app.UseMiddleware<ErrorHandlingMiddleWare>();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+
+//app.UseMiddleware<IdempotencyMiddleware>();
 
 app.UseAuthentication();
 

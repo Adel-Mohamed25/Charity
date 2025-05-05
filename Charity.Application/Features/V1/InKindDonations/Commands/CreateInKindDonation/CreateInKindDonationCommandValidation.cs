@@ -26,6 +26,10 @@ namespace Charity.Application.Features.V1.InKindDonations.Commands.CreateInKindD
                 .NotEmpty().WithMessage(ik => $"{nameof(ik.InKindDonationModel.ItemType)} can not be empty.")
                 .IsInEnum().WithMessage(ik => $"Invalid {nameof(ik.InKindDonationModel.ItemType)} value. Allowed values are (1) Clothes, (2) Food, (3) Medical Supplies, (4) Other.");
 
+            RuleFor(ik => ik.InKindDonationModel.DonationStatus)
+                .NotNull().WithMessage(ik => $"{nameof(ik.InKindDonationModel.DonationStatus)} can not be null.")
+                .NotEmpty().WithMessage(ik => $"{nameof(ik.InKindDonationModel.DonationStatus)} can not be empty.")
+                .IsInEnum().WithMessage(ik => $"Invalid {nameof(ik.InKindDonationModel.DonationStatus)} value. Allowed values are (1) New, (2) UsedExcellentCondition, (3) UsedGoodCondition.");
 
             RuleFor(ik => ik.InKindDonationModel.Quantity)
                 .NotNull().WithMessage(ik => $"{nameof(ik.InKindDonationModel.Quantity)} can not be null.")

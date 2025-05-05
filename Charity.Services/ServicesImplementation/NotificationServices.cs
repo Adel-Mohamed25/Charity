@@ -1,30 +1,37 @@
 ﻿using Charity.Contracts.ServicesAbstraction;
+using Charity.Infrastructure.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Charity.Services.ServicesImplementation
 {
     public class NotificationServices : INotificationServices
     {
-        //public NotificationServices(IHubContext<NotificationHub> hubContext)
-        //{
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        //}
-        public async Task SendNotification(string userId, string title, string message)
+        public NotificationServices(IHubContext<NotificationHub> hubContext)
         {
-            // 1️⃣ حفظ الإشعار في قاعدة البيانات
-            //var notification = new Notification
-            //{
-            //    UserId = userId,
-            //    Title = title,
-            //    Message = message,
-            //    IsRead = false,
-            //    CreatedDate = DateTime.UtcNow
-            //};
-
-            //_context.Notifications.Add(notification);
-            //await _context.SaveChangesAsync();
-
-            //// 2️⃣ إرسال الإشعار عبر SignalR
-            //await _hubContext.Clients.User(userId).SendAsync("ReceiveNotification", title, message);
+            _hubContext = hubContext;
         }
+
+        public Task SendNotificationToAllAsync(object message, CancellationToken cancellationToken)
+        => _hubContext.Clients.All.SendAsync("ReceiveNotification", message, cancellationToken);
+
+        public Task SendNotificationToAllExceptAsync(IEnumerable<string> excludedConnectionIds, object message, CancellationToken cancellationToken)
+            => _hubContext.Clients.AllExcept(excludedConnectionIds).SendAsync("ReceiveNotification", message, cancellationToken);
+
+        public Task SendNotificationToGroupAsync(string group, object message, CancellationToken cancellationToken)
+            => _hubContext.Clients.Group(group).SendAsync("ReceiveNotification", message, cancellationToken);
+
+        public Task SendNotificationToGroupExceptAsync(string group, IEnumerable<string> excludedConnectionIds, object message, CancellationToken cancellationToken)
+            => _hubContext.Clients.GroupExcept(group, excludedConnectionIds).SendAsync("ReceiveNotification", message, cancellationToken);
+
+        public Task SendNotificationToGroupsAsync(IEnumerable<string> groups, object message, CancellationToken cancellationToken)
+            => _hubContext.Clients.Groups(groups).SendAsync("ReceiveNotification", message, cancellationToken);
+
+        public Task SendNotificationToUserAsync(string userId, object message, CancellationToken cancellationToken)
+            => _hubContext.Clients.User(userId).SendAsync("ReceiveNotification", message, cancellationToken);
+
+        public Task SendNotificationToUsersAsync(IEnumerable<string> userIds, object message, CancellationToken cancellationToken)
+            => _hubContext.Clients.Users(userIds).SendAsync("ReceiveNotification", message, cancellationToken);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Charity.API.Hubs
+namespace Charity.Infrastructure.Hubs
 {
     public class NotificationHub : Hub
     {
@@ -10,10 +10,10 @@ namespace Charity.API.Hubs
         /// <param name="methodName">The event name that the client listens for (e.g., "ReceiveNotification").</param>
         /// <param name="message">The message payload to send.</param>
         /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
-        /// <returns>An asynchronous task.</returns>
-        public Task SendToAllAsync(string methodName, object message, CancellationToken cancellationToken)
+        /// <awaits>An asynchronous task.</awaits>
+        public async Task SendToAllAsync(string methodName, object message, CancellationToken cancellationToken)
         {
-            return Clients.All.SendAsync(methodName, message, cancellationToken);
+            await Clients.All.SendAsync(methodName, message, cancellationToken);
         }
 
         /// <summary>
@@ -23,10 +23,10 @@ namespace Charity.API.Hubs
         /// <param name="message">The message payload to send.</param>
         /// <param name="excludedConnectionIds">A collection of connection IDs to exclude.</param>
         /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
-        /// <returns>An asynchronous task.</returns>
-        public Task SendToAllExceptAsync(string methodName, object message, IEnumerable<string> excludedConnectionIds, CancellationToken cancellationToken)
+        /// <awaits>An asynchronous task.</awaits>
+        public async Task SendToAllExceptAsync(string methodName, object message, IEnumerable<string> excludedConnectionIds, CancellationToken cancellationToken)
         {
-            return Clients.AllExcept(excludedConnectionIds).SendAsync(methodName, message, cancellationToken);
+            await Clients.AllExcept(excludedConnectionIds).SendAsync(methodName, message, cancellationToken);
         }
 
         /// <summary>
@@ -36,10 +36,10 @@ namespace Charity.API.Hubs
         /// <param name="message">The message payload to send.</param>
         /// <param name="group">The target group name.</param>
         /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
-        /// <returns>An asynchronous task.</returns>
-        public Task SendToGroupAsync(string methodName, object message, string group, CancellationToken cancellationToken)
+        /// <awaits>An asynchronous task.</awaits>
+        public async Task SendToGroupAsync(string methodName, object message, string group, CancellationToken cancellationToken)
         {
-            return Clients.Group(group).SendAsync(methodName, message, cancellationToken);
+            await Clients.Group(group).SendAsync(methodName, message, cancellationToken);
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace Charity.API.Hubs
         /// <param name="group">The target group name.</param>
         /// <param name="excludedConnectionIds">A collection of connection IDs to exclude from the group.</param>
         /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
-        /// <returns>An asynchronous task.</returns>
-        public Task SendToGroupExceptAsync(string methodName, object message, string group, IEnumerable<string> excludedConnectionIds, CancellationToken cancellationToken)
+        /// <awaits>An asynchronous task.</awaits>
+        public async Task SendToGroupExceptAsync(string methodName, object message, string group, IEnumerable<string> excludedConnectionIds, CancellationToken cancellationToken)
         {
-            return Clients.GroupExcept(group, excludedConnectionIds).SendAsync(methodName, message, cancellationToken);
+            await Clients.GroupExcept(group, excludedConnectionIds).SendAsync(methodName, message, cancellationToken);
         }
 
         /// <summary>
@@ -63,10 +63,10 @@ namespace Charity.API.Hubs
         /// <param name="message">The message payload to send.</param>
         /// <param name="groupNames">A collection of target group names.</param>
         /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
-        /// <returns>An asynchronous task.</returns>
-        public Task SendToGroupsAsync(string methodName, object message, IEnumerable<string> groupNames, CancellationToken cancellationToken)
+        /// <awaits>An asynchronous task.</awaits>
+        public async Task SendToGroupsAsync(string methodName, object message, IEnumerable<string> groupNames, CancellationToken cancellationToken)
         {
-            return Clients.Groups(groupNames).SendAsync(methodName, message, cancellationToken);
+            await Clients.Groups(groupNames).SendAsync(methodName, message, cancellationToken);
         }
 
         /// <summary>
@@ -76,10 +76,10 @@ namespace Charity.API.Hubs
         /// <param name="message">The message payload to send.</param>
         /// <param name="userId">The user identifier for the target user.</param>
         /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
-        /// <returns>An asynchronous task.</returns>
-        public Task SendToUserAsync(string methodName, object message, string userId, CancellationToken cancellationToken)
+        /// <awaits>An asynchronous task.</awaits>
+        public async Task SendToUserAsync(string methodName, object message, string userId, CancellationToken cancellationToken)
         {
-            return Clients.User(userId).SendAsync(methodName, message, cancellationToken);
+            await Clients.User(userId).SendAsync(methodName, message, cancellationToken);
         }
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace Charity.API.Hubs
         /// <param name="message">The message payload to send.</param>
         /// <param name="userIds">A collection of user identifiers for the target users.</param>
         /// <param name="cancellationToken">A token to cancel the operation if needed.</param>
-        /// <returns>An asynchronous task.</returns>
-        public Task SendToUsersAsync(string methodName, object message, IEnumerable<string> userIds, CancellationToken cancellationToken)
+        /// <awaits>An asynchronous task.</awaits>
+        public async Task SendToUsersAsync(string methodName, object message, IEnumerable<string> userIds, CancellationToken cancellationToken)
         {
-            return Clients.Users(userIds).SendAsync(methodName, message, cancellationToken);
+            await Clients.Users(userIds).SendAsync(methodName, message, cancellationToken);
         }
 
     }

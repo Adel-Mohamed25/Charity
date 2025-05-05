@@ -10,10 +10,23 @@ namespace Charity.Persistence.Configurations
         {
             builder.HasKey(n => n.Id);
 
+            builder.Property(n => n.ReceiverId)
+                .IsRequired(false);
+
+
+            builder.Property(n => n.Message)
+                .IsRequired(false);
+
+
             builder.HasOne(n => n.Sender)
                 .WithMany(n => n.SentNotifications)
                 .HasForeignKey(n => n.SenderId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(n => n.Receiver)
+                .WithMany(n => n.ReceivedNotifications)
+                .HasForeignKey(n => n.ReceiverId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.ToTable("Notifications");
         }

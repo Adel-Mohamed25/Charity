@@ -3,6 +3,7 @@ using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Contracts.ServicesAbstraction;
 using Charity.Domain.Entities.IdentityEntities;
+using Charity.Domain.Enum;
 using Charity.Models.Email;
 using Charity.Models.ResponseModels;
 using MediatR;
@@ -66,10 +67,10 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Register
                 if (!result.Succeeded)
                     return ResponseHandler.Conflict<string>(message: "Failed to create user.");
 
-                await _unitOfWork.CharityUsers.UserManager.AddToRoleAsync(user, user.UserType.ToString());
+                await _unitOfWork.CharityUsers.UserManager.AddToRoleAsync(user, UserRole.Beneficiary.ToString());
                 var token = await _unitOfWork.CharityUsers.UserManager.GenerateEmailConfirmationTokenAsync(user);
 
-                var url = $"{_httpContextAccessor.HttpContext.Request.Scheme.Trim().ToLower()}://{_httpContextAccessor.HttpContext.Request.Host.ToUriComponent().Trim().ToLower()}/api/v1/Auth/ConfirmEmail";
+                var url = $"{_httpContextAccessor.HttpContext.Request.Scheme.Trim().ToLower()}://{_httpContextAccessor.HttpContext.Request.Host.ToUriComponent().Trim().ToLower()}/api/v1/Account/ConfirmEmail";
 
                 var parameters = new Dictionary<string, string>
                     {

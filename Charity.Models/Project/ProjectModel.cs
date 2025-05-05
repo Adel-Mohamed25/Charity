@@ -1,4 +1,5 @@
 ﻿using Charity.Domain.Enum;
+using System.Text.Json.Serialization;
 
 namespace Charity.Models.Project
 {
@@ -9,6 +10,8 @@ namespace Charity.Models.Project
         public string Name { get; set; }
         public decimal TargetAmount { get; set; }
         public string Description { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public ProjectStatus ProjectStatus { get; set; }  // "Ongoing", "Completed", "Pending"
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }

@@ -86,6 +86,8 @@ namespace Charity.Infrastructure.RepositoriesImplementation
                 {
                     entities = entities.Include(include);
                 }
+
+                entities = entities.AsSplitQuery();
             }
 
             return await entities.FirstOrDefaultAsync(cancellationToken);
@@ -131,6 +133,8 @@ namespace Charity.Infrastructure.RepositoriesImplementation
                 {
                     entities = entities.Include(include);
                 }
+
+                entities = entities.AsSplitQuery();
             }
 
 

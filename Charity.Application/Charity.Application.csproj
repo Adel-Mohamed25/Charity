@@ -31,4 +31,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\V1\MonetaryDonations\Commands\" />
+    <Folder Include="Features\V1\MonetaryDonations\Queries\" />
+  </ItemGroup>
+
 </Project>

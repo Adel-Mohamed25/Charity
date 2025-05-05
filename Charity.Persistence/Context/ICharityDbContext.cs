@@ -20,7 +20,6 @@ namespace Charity.Persistence.Context
         DbSet<CharityProject> CharityProjects { get; set; }
         DbSet<ProjectVolunteer> ProjectVolunteers { get; set; }
         DbSet<Notification> Notifications { get; set; }
-        DbSet<UserNotification> UserNotifications { get; set; }
         DbSet<VolunteerApplication> VolunteerApplications { get; set; }
 
         DatabaseFacade Database { get; }

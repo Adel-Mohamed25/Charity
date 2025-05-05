@@ -2,7 +2,7 @@
 
 namespace Charity.Services.ServicesImplementation
 {
-    public class UserVolunteerActivityServices : IUserVolunteerActivityServices
+    public class PaymentServices : IPaymentServices
     {
     }
 }

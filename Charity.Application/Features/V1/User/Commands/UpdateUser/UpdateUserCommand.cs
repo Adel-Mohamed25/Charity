@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Charity.Application.Features.V1.User.Commands.UpdateUser
 {
-    public record UpdateUserCommand(string Id, UpdateUserModel UpdateUser) : IRequest<Response<string>>;
+    public record UpdateUserCommand(UpdateUserModel UpdateUser) : IRequest<Response<string>>;
 }

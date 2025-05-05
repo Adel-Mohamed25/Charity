@@ -24,7 +24,8 @@ namespace Charity.Application.Mapper
 
             CreateMap<CharityUser, UpdateUserModel>();
             CreateMap<UpdateUserModel, CharityUser>()
-                .ForMember(des => des.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now));
+                .ForMember(des => des.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(des => des.UserName, opt => opt.MapFrom(src => src.Email));
 
         }
     }

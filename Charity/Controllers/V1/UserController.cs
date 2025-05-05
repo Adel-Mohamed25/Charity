@@ -17,9 +17,9 @@ namespace Charity.Api.Controllers.V1
     {
 
         [HttpPut("UpdateUser")]
-        public async Task<IActionResult> UpdateUser([FromQuery] string Id, [FromForm] UpdateUserModel updateUser)
+        public async Task<IActionResult> UpdateUser([FromForm] UpdateUserModel updateUser)
         {
-            return NewResult(await Mediator.Send(new UpdateUserCommand(Id, updateUser)));
+            return NewResult(await Mediator.Send(new UpdateUserCommand(updateUser)));
         }
 
         [HttpDelete("DeleteUser")]

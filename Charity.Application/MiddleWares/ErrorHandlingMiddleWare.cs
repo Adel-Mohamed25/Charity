@@ -8,12 +8,12 @@ using System.Net;
 
 namespace Charity.Application.MiddleWares
 {
-    public class ErrorHandlingMiddleWare
+    public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ErrorHandlingMiddleWare> _logger;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
-        public ErrorHandlingMiddleWare(RequestDelegate next, ILogger<ErrorHandlingMiddleWare> logger)
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
         {
             _next = next;
             _logger = logger;

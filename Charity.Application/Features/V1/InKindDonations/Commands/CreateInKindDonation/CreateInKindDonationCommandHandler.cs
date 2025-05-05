@@ -5,6 +5,7 @@ using Charity.Contracts.ServicesAbstraction;
 using Charity.Domain.Entities;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.InKindDonations.Commands.CreateInKindDonation
@@ -15,16 +16,19 @@ namespace Charity.Application.Features.V1.InKindDonations.Commands.CreateInKindD
         private readonly IUnitOfService _unitOfService;
         private readonly ILogger<CreateInKindDonationCommandHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContext;
 
         public CreateInKindDonationCommandHandler(IUnitOfWork unitOfWork,
             IUnitOfService unitOfService,
             ILogger<CreateInKindDonationCommandHandler> logger,
-            IMapper mapper)
+            IMapper mapper,
+            IHttpContextAccessor httpContext)
         {
             _unitOfWork = unitOfWork;
             _unitOfService = unitOfService;
             _logger = logger;
             _mapper = mapper;
+            _httpContext = httpContext;
         }
 
         public async Task<Response<string>> Handle(CreateInKindDonationCommand request, CancellationToken cancellationToken)

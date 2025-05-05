@@ -24,6 +24,11 @@ namespace Charity.Persistence.Configurations
                 .HasConversion(ikd => ikd.ToString(),
                 ikd => Enum.Parse<DonationItemType>(ikd));
 
+            builder.Property(ikd => ikd.DonationStatus)
+                .IsRequired()
+                .HasConversion(ikd => ikd.ToString(),
+                ikd => Enum.Parse<DonationStatus>(ikd));
+
 
             builder.Property(ikd => ikd.DonorId)
                 .IsRequired();

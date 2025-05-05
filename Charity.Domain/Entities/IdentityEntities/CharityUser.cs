@@ -11,7 +11,6 @@ namespace Charity.Domain.Entities.IdentityEntities
         public string? LastName { get; set; }
         public string? Address { get; set; }
         public string? ImageUrl { get; set; }
-        public UserRole UserType { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public GenderType Gender { get; set; }
         public DateTime? CreatedDate { get; set; }
@@ -43,7 +42,10 @@ namespace Charity.Domain.Entities.IdentityEntities
 
         [InverseProperty("Sender")]
         public ICollection<Notification> SentNotifications { get; set; } = new List<Notification>();
-        public ICollection<UserNotification> ReceivedNotifications { get; set; } = new List<UserNotification>();
+
+        [InverseProperty("Receiver")]
+        public ICollection<Notification> ReceivedNotifications { get; set; } = new List<Notification>();
+
         public ICollection<VolunteerApplication> VolunteerApplications { get; set; } = new List<VolunteerApplication>();
 
     }
