@@ -10,9 +10,11 @@ namespace Charity.Domain.Entities
         public string DonorId { get; set; }
         public CharityUser Donor { get; set; }
         public decimal Amount { get; set; }
-        public PaymentMethod PaymentMethod { get; set; } // "Cash", "Credit Card", "Bank Transfer"
+        public PaymentMethods PaymentMethod { get; set; } // "Cash", "Credit Card", "Bank Transfer"
         public bool IsAllocated { get; set; } // هل تم تخصيصها لمشروع أو مستفيد؟
+        public bool IsPaymentConfirmed { get; set; }
         public string? ProjectId { get; set; }
+
         public CharityProject Project { get; set; }
         public ICollection<AidDistribution> AidDistributions { get; set; } = new List<AidDistribution>();
     }

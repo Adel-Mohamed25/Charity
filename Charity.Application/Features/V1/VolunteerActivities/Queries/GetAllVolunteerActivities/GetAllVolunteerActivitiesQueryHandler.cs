@@ -30,7 +30,7 @@ namespace Charity.Application.Features.V1.VolunteerActivities.Queries.GetAllVolu
         {
             try
             {
-                var volunteerActivities = await _unitOfWork.VolunteerActivities.GetAllAsync(orderBy: va => va.Id,
+                var volunteerActivities = await _unitOfWork.VolunteerActivities.GetAllAsync(orderBy: va => va.Name,
                     orderByDirection: OrderByDirection.Ascending,
                     cancellationToken: cancellationToken);
 

@@ -9,6 +9,7 @@ namespace Charity.Domain.Entities
         public override string Id { get; set; } = Guid.NewGuid().ToString();
         public string OrganizerId { get; set; }
         public CharityUser Organizer { get; set; }
+        public string Name { get; set; }
         public string ActivityDescription { get; set; }
 
         public ICollection<UserVolunteerActivity> Volunteers { get; set; } = new List<UserVolunteerActivity>();

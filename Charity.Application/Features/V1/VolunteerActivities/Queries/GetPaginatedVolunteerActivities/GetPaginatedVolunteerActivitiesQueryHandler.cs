@@ -29,7 +29,7 @@ namespace Charity.Application.Features.V1.VolunteerActivities.Queries.GetPaginat
         {
             try
             {
-                var volunteerActivities = await _unitOfWork.VolunteerActivities.GetAllAsync(orderBy: va => va.Id,
+                var volunteerActivities = await _unitOfWork.VolunteerActivities.GetAllAsync(orderBy: va => va.Name,
                 paginationOn: true,
                 orderByDirection: request.Pagination.OrderByDirection,
                 pageNumber: request.Pagination.PageNumber,

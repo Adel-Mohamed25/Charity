@@ -3,6 +3,7 @@ using Charity.Application.Features.V1.AssistanceRequests.Commands.CreateAssistan
 using Charity.Application.Features.V1.AssistanceRequests.Commands.DeleteAssistanceRequest;
 using Charity.Application.Features.V1.AssistanceRequests.Commands.UpdateAssistanceRequest;
 using Charity.Application.Features.V1.AssistanceRequests.Queries.GetAllAssistanceRequests;
+using Charity.Application.Features.V1.AssistanceRequests.Queries.GetAllAssistanceRequestsById;
 using Charity.Application.Features.V1.AssistanceRequests.Queries.GetAssistanceRequestById;
 using Charity.Application.Features.V1.AssistanceRequests.Queries.GetPaginatedAssistanceRequests;
 using Charity.Models.AssistanceRequest;
@@ -38,6 +39,12 @@ namespace Charity.Api.Controllers.V1
         public async Task<IActionResult> GetAllAssistanceRequests()
         {
             return NewResult(await Mediator.Send(new GetAllAssistanceRequestsQuery()));
+        }
+
+        [HttpGet("GetAllAssistanceRequestsById")]
+        public async Task<IActionResult> GetAllAssistanceRequestsById(string id)
+        {
+            return NewResult(await Mediator.Send(new GetAllAssistanceRequestsByIdQuery(id)));
         }
 
         [HttpGet("GetPaginatedAssistanceRequests")]

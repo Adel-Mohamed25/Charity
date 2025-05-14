@@ -1,6 +1,6 @@
 ﻿namespace Charity.Domain.Enum
 {
-    public enum PaymentMethod
+    public enum PaymentMethods
     {
         Cash = 1,
         CreditCard,

@@ -27,7 +27,7 @@ namespace Charity.Application.Features.V1.AssistanceRequests.Queries.GetAssistan
         {
             try
             {
-                var assistanceRequest = await _unitOfWork.AssistanceRequests.GetByAsync(u => u.Id.Equals(request.Id),
+                var assistanceRequest = await _unitOfWork.AssistanceRequests.GetByAsync(ar => ar.Id.Equals(request.Id),
                     cancellationToken: cancellationToken);
                 if (assistanceRequest is null)
                     return ResponseHandler.NotFound<AssistanceRequestModel>(message: "Assistance request not found.");

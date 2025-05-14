@@ -70,6 +70,7 @@ namespace Charity.Infrastructure.Extensions
             #region Configuration Settings
             services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
             services.Configure<JWTSettings>(configuration.GetSection(nameof(JWTSettings)));
+            services.Configure<StripeSettings>(configuration.GetSection(nameof(StripeSettings)));
             #endregion
 
             return services;

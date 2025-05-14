@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Stripe;
 using System.Text;
 
 namespace Charity.Services.Extensions
@@ -69,6 +70,11 @@ namespace Charity.Services.Extensions
 
             //    options.CallbackPath = "/signin-facebook";
             //});
+            #endregion
+
+            #region Add Strip Settings
+            var stripsection = configuration.GetSection($"{nameof(StripeSettings)}");
+            StripeConfiguration.ApiKey = stripsection.GetValue<string>($"{nameof(StripeSettings.SecretKey)}");
             #endregion
 
             #region Configure Swagger with JWT Authentication and able to read version correctly

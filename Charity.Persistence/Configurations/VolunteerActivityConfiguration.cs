@@ -10,6 +10,9 @@ namespace Charity.Persistence.Configurations
         {
             builder.HasKey(va => va.Id);
 
+            builder.Property(va => va.Name)
+                .IsRequired();
+
             builder.Property(va => va.ActivityDescription)
                 .IsRequired();
 
