@@ -27,11 +27,10 @@ namespace Charity.Application.Features.V1.Role.Commands.UpdateRole
         {
             try
             {
-                var role = await _unitOfWork.CharityRoles.RoleManager.FindByIdAsync(request.Id);
+                var role = await _unitOfWork.CharityRoles.RoleManager.FindByIdAsync(request.RoleModel.Id);
                 if (role is null)
                     return ResponseHandler.NotFound<string>(message: "Role Not Found.");
 
-                request.RoleModel.ModifiedDate = DateTime.UtcNow;
                 _mapper.Map(request.RoleModel, role);
                 IdentityResult result = await _unitOfWork.CharityRoles.RoleManager.UpdateAsync(role);
 

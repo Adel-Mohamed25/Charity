@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
-using Charity.Domain.Entities;
 using Charity.Models.ResponseModels;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -32,8 +31,8 @@ namespace Charity.Application.Features.V1.AidDistributions.Commands.UpdateAidDis
                 if (aidDistribution is null)
                     return ResponseHandler.NotFound<string>(message: "AidDistribution not found.");
 
-                var result = _mapper.Map<AidDistribution>(request.AidDistributionModel);
-                await _unitOfWork.AidDistributions.UpdateAsync(result, cancellationToken);
+                _mapper.Map(request.AidDistributionModel, aidDistribution);
+                await _unitOfWork.AidDistributions.UpdateAsync(aidDistribution, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 return ResponseHandler.Success<string>(message: "The aidDistribution has been updated successfully.");
             }

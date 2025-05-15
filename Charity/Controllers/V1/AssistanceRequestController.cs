@@ -24,9 +24,9 @@ namespace Charity.Api.Controllers.V1
         }
 
         [HttpPut("UpdateAssistanceRequest")]
-        public async Task<IActionResult> UpdateAssistanceRequest([FromBody] AssistanceRequestModel assistanceRequest)
+        public async Task<IActionResult> UpdateAssistanceRequest([FromBody] UpdateAssistanceRequestModel updateAssistanceRequest)
         {
-            return NewResult(await Mediator.Send(new UpdateAssistanceRequestCommand(assistanceRequest)));
+            return NewResult(await Mediator.Send(new UpdateAssistanceRequestCommand(updateAssistanceRequest)));
         }
 
         [HttpDelete("DeleteAssistanceRequest")]

@@ -21,8 +21,7 @@ namespace Charity.Application.Features.V1.Role.Commands.CreateRole
                 .MaximumLength(50).WithMessage("Name can not exceed 50 characters.")
                 .MustAsync(IsNameUnique).WithMessage("Name already exists.");
 
-            RuleFor(cr => cr.RoleModel.CreatedDate)
-               .LessThanOrEqualTo(DateTime.Now).WithMessage("CreatedDate cannot be in the future.");
+
         }
 
         private async Task<bool> IsNameUnique(string name, CancellationToken cancellationToken)

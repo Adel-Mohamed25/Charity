@@ -16,7 +16,6 @@ namespace Charity.Models.InKindDonation
         public bool IsAllocated { get; set; }
         public string DonorId { get; set; }
         public string? ProjectId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+
     }
 }

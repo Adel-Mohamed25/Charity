@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
-using Charity.Domain.Entities;
 using Charity.Models.ResponseModels;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -34,8 +33,8 @@ namespace Charity.Application.Features.V1.AssistanceRequests.Commands.UpdateAssi
                 if (assistanceRequest is null)
                     return ResponseHandler.NotFound<string>(message: "Assistance Request not found.");
 
-                var result = _mapper.Map<AssistanceRequest>(request.AssistanceRequest);
-                await _unitOfWork.AssistanceRequests.UpdateAsync(result, cancellationToken);
+                _mapper.Map(request.AssistanceRequest, assistanceRequest);
+                await _unitOfWork.AssistanceRequests.UpdateAsync(assistanceRequest, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 return ResponseHandler.Success<string>(message: "The assistance request has been updated successfully.");
             }

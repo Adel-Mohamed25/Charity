@@ -35,9 +35,6 @@ namespace Charity.Applivation.Features.V1.VolunteerApplivations.Commands.UpdateV
                 .IsInEnum().WithMessage(ca => $"{nameof(ca.VolunteerApplicationModel.RequestStatus)} value. Allowed values are Approved (1), Rejected (2), Pending(3).");
 
 
-            RuleFor(va => va.VolunteerApplicationModel.CreatedDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage(va => $"Invalid {nameof(va.VolunteerApplicationModel.CreatedDate)} vannot be in the future.");
-
         }
     }
 }

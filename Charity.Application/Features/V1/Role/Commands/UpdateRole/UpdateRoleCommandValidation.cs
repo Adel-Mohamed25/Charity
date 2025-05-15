@@ -15,18 +15,11 @@ namespace Charity.Application.Features.V1.Role.Commands.UpdateRole
 
         private void ApplyValidationRules()
         {
-            RuleFor(u => u.Id)
-               .NotEmpty().WithMessage(u => $"{nameof(u.Id)} can not be not empty.")
-               .NotNull().WithMessage(u => $"{nameof(u.Id)} can not be not null.")
-               .MaximumLength(36).WithMessage(u => $"{nameof(u.Id)} can not be exceed 36 characters.")
-               .MinimumLength(36).WithMessage(u => $"{nameof(u.Id)} can not be less than 36 characters.");
-
             RuleFor(u => u.RoleModel.Id)
               .NotEmpty().WithMessage(u => $"{nameof(u.RoleModel.Id)} can not be not empty.")
               .NotNull().WithMessage(u => $"{nameof(u.RoleModel.Id)} can not be not null.")
               .MaximumLength(36).WithMessage(u => $"{nameof(u.RoleModel.Id)} can not be exceed 36 characters.")
-              .MinimumLength(36).WithMessage(u => $"{nameof(u.RoleModel.Id)} can not be less than 36 characters.")
-              .Equal(u => u.Id).WithMessage(u => $"{nameof(u.Id)} and {nameof(u.RoleModel.Id)} not matching.");
+              .MinimumLength(36).WithMessage(u => $"{nameof(u.RoleModel.Id)} can not be less than 36 characters.");
 
             RuleFor(u => u.RoleModel.Name)
                .NotNull().WithMessage("Name can not be null.")
@@ -34,11 +27,6 @@ namespace Charity.Application.Features.V1.Role.Commands.UpdateRole
                .MaximumLength(50).WithMessage("Name can not exceed 50 characters.")
                .MustAsync(IsNameUnique).WithMessage("Name already exists.");
 
-            RuleFor(u => u.RoleModel.CreatedDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage("CreatedDate cannot be in the future.");
-
-            RuleFor(u => u.RoleModel.ModifiedDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage("CreatedDate cannot be in the future.");
 
         }
 

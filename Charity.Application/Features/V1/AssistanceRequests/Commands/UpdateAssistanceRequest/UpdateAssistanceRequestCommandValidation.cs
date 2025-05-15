@@ -36,11 +36,6 @@ namespace Charity.Application.Features.V1.AssistanceRequests.Commands.UpdateAssi
                 .NotEmpty().WithMessage(ca => $"{nameof(ca.AssistanceRequest.RequestStatus)} can not be empty.")
                 .IsInEnum().WithMessage(ca => $"{nameof(ca.AssistanceRequest.RequestStatus)} value. Allowed values are Approved (1), Rejected (2), Pending(3).");
 
-            RuleFor(ca => ca.AssistanceRequest.CreatedDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage(ca => $"Invalid {nameof(ca.AssistanceRequest.CreatedDate)} cannot be in the future.");
-
-            RuleFor(ca => ca.AssistanceRequest.ModifiedDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage(ca => $"Invalid {nameof(ca.AssistanceRequest.ModifiedDate)} cannot be in the future.");
 
         }
     }

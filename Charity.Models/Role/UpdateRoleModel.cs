@@ -1,7 +1,8 @@
 ﻿namespace Charity.Models.Role
 {
-    public class CreateRoleModel
+    public class UpdateRoleModel
     {
+        public string Id { get; set; }
         public string Name { get; set; }
     }
 }

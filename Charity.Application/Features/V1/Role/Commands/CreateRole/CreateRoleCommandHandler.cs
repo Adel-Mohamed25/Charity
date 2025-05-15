@@ -27,7 +27,6 @@ namespace Charity.Application.Features.V1.Role.Commands.CreateRole
         {
             try
             {
-                request.RoleModel.CreatedDate = DateTime.UtcNow;
                 var role = _mapper.Map<CharityRole>(request.RoleModel);
                 var result = await _unitOfWork.CharityRoles.RoleManager.CreateAsync(role);
                 if (!result.Succeeded)

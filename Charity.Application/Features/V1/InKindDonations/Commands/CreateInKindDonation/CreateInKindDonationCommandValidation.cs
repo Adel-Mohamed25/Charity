@@ -54,9 +54,6 @@ namespace Charity.Application.Features.V1.InKindDonations.Commands.CreateInKindD
                 .MaximumLength(36).WithMessage(ik => $"{nameof(ik.InKindDonationModel.ProjectId)} can not exceed 36 Characters.")
                 .MinimumLength(36).WithMessage(ik => $"{nameof(ik.InKindDonationModel.ProjectId)} can not less than 36 Characters.");
 
-            RuleFor(ik => ik.InKindDonationModel.CreatedDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage(ik => $"Invalid {nameof(ik.InKindDonationModel.CreatedDate)} cannot be in the future.");
-
         }
 
     }

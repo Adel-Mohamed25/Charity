@@ -27,7 +27,6 @@ namespace Charity.Application.Features.V1.VolunteerActivities.Commands.UpdateVol
                 .NotEmpty().WithMessage(va => $"{nameof(va.VolunteerActivityModel.ActivityDescription)} can not be empty.")
                 .MaximumLength(500).WithMessage(va => $"{nameof(va.VolunteerActivityModel.ActivityDescription)} can not exceed 500 Characters.");
 
-
         }
     }
 }

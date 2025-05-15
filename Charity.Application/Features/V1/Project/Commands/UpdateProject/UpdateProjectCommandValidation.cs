@@ -40,11 +40,6 @@ namespace Charity.Application.Features.V1.Project.Commands.UpdateProject
                 .MinimumLength(36).WithMessage(up => $"{nameof(up.ProjectModel.ManagerId)} can not less than 36 Characters.");
 
 
-            //RuleFor(up => up.ProjectModel.CreatedDate)
-            //    .LessThanOrEqualTo(DateTime.Now).WithMessage(up => $"Invalid {nameof(up.ProjectModel.CreatedDate)} cannot be in the future.");
-
-            //RuleFor(up => up.ProjectModel.ModifiedDate)
-            //   .LessThanOrEqualTo(DateTime.Now).WithMessage(up => $"Invalid {nameof(up.ProjectModel.ModifiedDate)} cannot be in the future.");
 
         }
     }

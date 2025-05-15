@@ -14,12 +14,16 @@ namespace Charity.Application.Profiles
         private void Map()
         {
             CreateMap<InKindDonation, CreateInKindDonationModel>();
-            CreateMap<CreateInKindDonationModel, Domain.Entities.InKindDonation>()
+            CreateMap<CreateInKindDonationModel, InKindDonation>()
+                .ForMember(des => des.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(des => des.IsAllocated, opt => opt.MapFrom(src => false));
 
-            CreateMap<InKindDonationModel, Domain.Entities.InKindDonation>().ReverseMap();
+            CreateMap<InKindDonation, UpdateInKindDonationModel>();
+            CreateMap<UpdateInKindDonationModel, InKindDonation>()
+                .ForMember(des => des.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now));
 
-            CreateMap<UpdateInKindDonationModel, Domain.Entities.InKindDonation>().ReverseMap();
+            CreateMap<InKindDonationModel, InKindDonation>().ReverseMap();
+
         }
     }
 }

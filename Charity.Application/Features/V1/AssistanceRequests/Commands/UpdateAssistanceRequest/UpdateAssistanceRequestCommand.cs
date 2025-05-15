@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Charity.Application.Features.V1.AssistanceRequests.Commands.UpdateAssistanceRequest
 {
-    public record UpdateAssistanceRequestCommand(AssistanceRequestModel AssistanceRequest) : IRequest<Response<string>>;
+    public record UpdateAssistanceRequestCommand(UpdateAssistanceRequestModel AssistanceRequest) : IRequest<Response<string>>;
 }

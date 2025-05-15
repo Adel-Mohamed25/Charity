@@ -23,9 +23,9 @@ namespace Charity.Api.Controllers.V1
         }
 
         [HttpPut("UpdateRole")]
-        public async Task<IActionResult> UpdateRole([FromQuery] string Id, [FromBody] RoleModel roleModel)
+        public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleModel updateRoleModel)
         {
-            return NewResult(await Mediator.Send(new UpdateRoleCommand(Id, roleModel)));
+            return NewResult(await Mediator.Send(new UpdateRoleCommand(updateRoleModel)));
         }
 
         [HttpDelete("DeleteRole")]

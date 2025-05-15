@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
-using Charity.Domain.Entities;
 using Charity.Models.ResponseModels;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -33,8 +32,8 @@ namespace Charity.Application.Features.V1.VolunteerApplications.Commands.UpdateV
                 if (volunteerApplication is null)
                     return ResponseHandler.NotFound<string>(message: "Volunteer application not found.");
 
-                var result = _mapper.Map<VolunteerApplication>(request.VolunteerApplicationModel);
-                await _unitOfWork.VolunteerApplications.UpdateAsync(result, cancellationToken);
+                _mapper.Map(request.VolunteerApplicationModel, volunteerApplication);
+                await _unitOfWork.VolunteerApplications.UpdateAsync(volunteerApplication, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 return ResponseHandler.Success<string>(message: "The volunteer application has been updated successfully.");
             }

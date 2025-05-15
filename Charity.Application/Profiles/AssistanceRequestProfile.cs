@@ -18,6 +18,10 @@ namespace Charity.Application.Profiles
             CreateMap<CreateAssistanceRequestModel, AssistanceRequest>()
                 .ForMember(des => des.RequestStatus, opt => opt.MapFrom(src => RequestStatus.Pending));
 
+            CreateMap<AssistanceRequest, UpdateAssistanceRequestModel>();
+            CreateMap<UpdateAssistanceRequestModel, AssistanceRequest>()
+                .ForMember(des => des.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now));
+
             CreateMap<AssistanceRequest, AssistanceRequestModel>().ReverseMap();
         }
     }

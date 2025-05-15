@@ -2,7 +2,6 @@
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Contracts.ServicesAbstraction;
-using Charity.Domain.Entities;
 using Charity.Models.ResponseModels;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -49,9 +48,9 @@ namespace Charity.Application.Features.V1.Project.Commands.UpdateProject
                     request.ProjectModel.ImageUrl = imageUrl;
                 }
 
-                var result = _mapper.Map<CharityProject>(request.ProjectModel);
+                _mapper.Map(request.ProjectModel, project);
 
-                await _unitOfWork.Projects.UpdateAsync(result, cancellationToken);
+                await _unitOfWork.Projects.UpdateAsync(project, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 return ResponseHandler.Success<string>(message: "The project has been updated successfully.");
             }

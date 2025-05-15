@@ -49,8 +49,8 @@ namespace Charity.Application.Features.V1.User.Commands.UpdateUser
                     var imageUrl = await _unitOfService.FileServices.UploadImageAsync("UsersImages", request.UpdateUser.Image);
                     request.UpdateUser.ImageUrl = imageUrl;
                 }
-                _mapper.Map(request.UpdateUser, user);
 
+                _mapper.Map(request.UpdateUser, user);
 
                 IdentityResult result = await _unitOfWork.CharityUsers.UserManager.UpdateAsync(user);
                 if (!result.Succeeded)

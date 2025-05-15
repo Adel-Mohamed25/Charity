@@ -15,6 +15,5 @@ namespace Charity.Models.User
         public string PhoneNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public GenderType Gender { get; set; }
-        public DateTime CreatedDate { get; set; }
     }
 }

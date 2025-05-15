@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Charity.Application.Features.V1.Role.Commands.UpdateRole
 {
-    public record UpdateRoleCommand(string Id, RoleModel RoleModel) : IRequest<Response<string>>;
+    public record UpdateRoleCommand(UpdateRoleModel RoleModel) : IRequest<Response<string>>;
 }

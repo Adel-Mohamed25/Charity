@@ -55,11 +55,6 @@ namespace Charity.Application.Features.V1.InKindDonations.Commands.UpdateInKindD
                 .MaximumLength(36).WithMessage(ik => $"{nameof(ik.UpdateInKindDonation.ProjectId)} can not exceed 36 Characters.")
                 .MinimumLength(36).WithMessage(ik => $"{nameof(ik.UpdateInKindDonation.ProjectId)} can not less than 36 Characters.");
 
-            RuleFor(ik => ik.UpdateInKindDonation.CreatedDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage(ik => $"Invalid {nameof(ik.UpdateInKindDonation.CreatedDate)} cannot be in the future.");
-
-            RuleFor(ik => ik.UpdateInKindDonation.ModifiedDate)
-                .LessThanOrEqualTo(DateTime.Now).WithMessage(ik => $"Invalid {nameof(ik.UpdateInKindDonation.ModifiedDate)} cannot be in the future.");
 
         }
     }
