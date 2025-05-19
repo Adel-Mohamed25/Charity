@@ -92,6 +92,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowSpecificOrigins");
 
+//Data Seeder 
 await using (var scop = app.Services.CreateAsyncScope())
 {
     var services = scop.ServiceProvider;
@@ -113,22 +114,6 @@ await using (var scop = app.Services.CreateAsyncScope())
     }
 }
 
-//Data Seeder 
-await using (var scop = app.Services.CreateAsyncScope())
-{
-    var services = scop.ServiceProvider;
-    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-    var logger = loggerFactory.CreateLogger("app");
-    try
-    {
-        var unitOfWork = services.GetRequiredService<IUnitOfWork>();
-
-    }
-    catch (Exception ex)
-    {
-        logger.LogWarning(ex, "An error occurred seeding the DB");
-    }
-}
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 

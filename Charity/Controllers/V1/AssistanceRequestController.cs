@@ -6,6 +6,8 @@ using Charity.Application.Features.V1.AssistanceRequests.Queries.GetAllAssistanc
 using Charity.Application.Features.V1.AssistanceRequests.Queries.GetAllAssistanceRequestsById;
 using Charity.Application.Features.V1.AssistanceRequests.Queries.GetAssistanceRequestById;
 using Charity.Application.Features.V1.AssistanceRequests.Queries.GetPaginatedAssistanceRequests;
+using Charity.Application.Features.V1.AssistanceRequests.Queries.GetPaginatedByRequestStatus;
+using Charity.Domain.Enum;
 using Charity.Models.AssistanceRequest;
 using Charity.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +53,12 @@ namespace Charity.Api.Controllers.V1
         public async Task<IActionResult> GetPaginatedAssistanceRequests([FromQuery] PaginationModel pagination)
         {
             return NewResult(await Mediator.Send(new GetPaginatedAssistanceRequestsQuery(pagination)));
+        }
+
+        [HttpGet("GetPaginatedByRequestStatus")]
+        public async Task<IActionResult> GetPaginatedByRequestStatus([FromQuery] RequestStatus requestStatus, [FromQuery] PaginationModel pagination)
+        {
+            return NewResult(await Mediator.Send(new GetPaginatedByRequestStatusQuery(requestStatus, pagination)));
         }
 
         [HttpGet("GetAssistanceRequestById")]
