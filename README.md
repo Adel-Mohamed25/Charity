@@ -29,10 +29,10 @@ Interactive API documentation is available via Swagger UI:
 ## 🛠️ Installation
 
 ### Prerequisites
-- .NET 6.0+ SDK
-- SQL Server (or compatible database)
+- .NET 8.0+ SDK
+- SQL Server
 
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/charity-api.git
+   https://github.com/Adel-Mohamed25/Charity.git
