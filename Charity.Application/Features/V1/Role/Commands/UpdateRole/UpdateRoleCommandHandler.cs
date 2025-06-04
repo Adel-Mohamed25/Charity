@@ -36,7 +36,7 @@ namespace Charity.Application.Features.V1.Role.Commands.UpdateRole
 
                 if (!result.Succeeded)
                     return ResponseHandler.Conflict<string>(message: "Check your input data.");
-                return ResponseHandler.Success<string>(message: "The role has been updated successfully");
+                return ResponseHandler.NoContent<string>(message: "The role has been updated successfully");
 
             }
             catch (Exception ex)

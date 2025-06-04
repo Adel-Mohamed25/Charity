@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.ResponseModels;
 using Charity.Models.VolunteerApplication;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.VolunteerApplications.Queries.GetAllVolunteerApplications
@@ -36,12 +38,14 @@ namespace Charity.Application.Features.V1.VolunteerApplications.Queries.GetAllVo
                 if (!volunteerApplications.Any())
                     return ResponseHandler.NotFound<IEnumerable<VolunteerApplicationModel>>(message: "Volunteer applications not found.");
 
-                var result = _mapper.Map<IEnumerable<VolunteerApplicationModel>>(volunteerApplications);
-                return ResponseHandler.Success(data: result);
+                var result = await volunteerApplications.ProjectTo<VolunteerApplicationModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while retrieving volunteer applications data.");
+                _logger.LogError(ex, "An error occurred while retrieving volunteer applications.");
                 return ResponseHandler.BadRequest<IEnumerable<VolunteerApplicationModel>>(errors: ex.Message);
             }
         }

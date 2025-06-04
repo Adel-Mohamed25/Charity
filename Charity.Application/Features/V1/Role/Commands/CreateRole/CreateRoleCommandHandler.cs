@@ -31,7 +31,7 @@ namespace Charity.Application.Features.V1.Role.Commands.CreateRole
                 var result = await _unitOfWork.CharityRoles.RoleManager.CreateAsync(role);
                 if (!result.Succeeded)
                     return ResponseHandler.Conflict<string>(errors: "Error occured during input data for create role.");
-                return ResponseHandler.Success<string>(message: "The role has been created successfully.");
+                return ResponseHandler.Created<string>(message: "The role has been created successfully.");
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using Charity.Domain.Commons;
 using Charity.Domain.Entities.IdentityEntities;
+using Charity.Domain.Enum;
 
 namespace Charity.Domain.Entities
 {
@@ -14,5 +15,7 @@ namespace Charity.Domain.Entities
         public InKindDonation? InKindDonation { get; set; }
         public string VolunteerId { get; set; }
         public CharityUser Volunteer { get; set; }
+        public string Description { get; set; }
+        public AidDistributionStatus Status { get; set; }
     }
 }

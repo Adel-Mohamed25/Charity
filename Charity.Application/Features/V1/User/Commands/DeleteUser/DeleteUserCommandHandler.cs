@@ -37,7 +37,7 @@ namespace Charity.Application.Features.V1.User.Commands.DeleteUser
                 IdentityResult result = await _unitOfWork.CharityUsers.UserManager.DeleteAsync(user);
                 if (!result.Succeeded)
                     return ResponseHandler.BadRequest<string>(errors: "An error occurred while deleting the user.");
-                return ResponseHandler.Success<string>(message: "The user has been deleted successfully.");
+                return ResponseHandler.NoContent<string>(message: "The user has been deleted successfully.");
 
             }
             catch (Exception ex)

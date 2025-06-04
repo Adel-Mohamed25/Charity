@@ -35,7 +35,7 @@ namespace Charity.Application.Features.V1.VolunteerActivities.Commands.UpdateVol
                 _mapper.Map(request.VolunteerActivityModel, volunteerActivity);
                 await _unitOfWork.VolunteerActivities.UpdateAsync(volunteerActivity, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The volunteer activity has been updated successfully.");
+                return ResponseHandler.NoContent<string>(message: "The volunteer activity has been updated successfully.");
             }
             catch (Exception ex)
             {

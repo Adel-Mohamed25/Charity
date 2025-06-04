@@ -24,7 +24,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.LockAccount
                 if (user == null)
                     return ResponseHandler.NotFound<string>(errors: "User not found.");
                 await _unitOfWork.CharityUsers.UserManager.SetLockoutEndDateAsync(user, DateTime.MaxValue);
-                return ResponseHandler.Success<string>(message: "User account has been successfully locked.");
+                return ResponseHandler.NoContent<string>(message: "User account has been successfully locked.");
             }
             catch (Exception ex)
             {

@@ -25,7 +25,8 @@ namespace Charity.Application.Features.V1.Notifications.Queries.GetCountMessages
                 if (!await _unitOfWork.CharityUsers.IsExistAsync(u => u.Id.Equals(request.ReceiveId)))
                     return ResponseHandler.NotFound<string>(message: "User not found.");
 
-                var messagesNum = await _unitOfWork.Notifications.CountAsync(n => n.ReceiverId!.Equals(request.ReceiveId) && !n.IsRead, cancellationToken);
+                var messagesNum = await _unitOfWork.Notifications.CountAsync(n => (n.ReceiverId!.Equals(request.ReceiveId) || n.ReceiverId == null)
+                && !n.IsRead, cancellationToken);
 
                 if (messagesNum is 0)
                     return ResponseHandler.NotFound<string>(message: "Not found any messages for this user to count.");

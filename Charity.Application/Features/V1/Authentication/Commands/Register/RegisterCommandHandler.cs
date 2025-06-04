@@ -67,7 +67,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Register
                 if (!result.Succeeded)
                     return ResponseHandler.Conflict<string>(message: "Failed to create user.");
 
-                await _unitOfWork.CharityUsers.UserManager.AddToRoleAsync(user, UserRole.Beneficiary.ToString());
+                await _unitOfWork.CharityUsers.UserManager.AddToRoleAsync(user, nameof(UserRole.Beneficiary));
                 var token = await _unitOfWork.CharityUsers.UserManager.GenerateEmailConfirmationTokenAsync(user);
 
                 var url = $"{_httpContextAccessor.HttpContext.Request.Scheme.Trim().ToLower()}://{_httpContextAccessor.HttpContext.Request.Host.ToUriComponent().Trim().ToLower()}/api/v1/Account/ConfirmEmail";
@@ -109,7 +109,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Register
 
                 var emaiModel = await _unitOfService.EmailServices.SendEmailAsync(sendEmailModel);
                 if (emaiModel.IsSuccess)
-                    return ResponseHandler.Success<string>(message: "The account has been registered successfully.");
+                    return ResponseHandler.NoContent<string>(message: "The account has been registered successfully.");
                 return ResponseHandler.BadRequest<string>(message: "Failed to send confirmation email");
             }
             catch (Exception ex)

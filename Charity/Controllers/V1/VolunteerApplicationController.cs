@@ -2,9 +2,10 @@
 using Charity.Application.Features.V1.VolunteerApplications.Commands.CreateVolunteerApplication;
 using Charity.Application.Features.V1.VolunteerApplications.Commands.DeleteVolunteerApplication;
 using Charity.Application.Features.V1.VolunteerApplications.Commands.UpdateVolunteerApplication;
+using Charity.Application.Features.V1.VolunteerApplications.Queries.GetActivitiesPaginatedByRequestStatus;
 using Charity.Application.Features.V1.VolunteerApplications.Queries.GetAllVolunteerApplications;
-using Charity.Application.Features.V1.VolunteerApplications.Queries.GetPaginatedByRequestStatus;
 using Charity.Application.Features.V1.VolunteerApplications.Queries.GetPaginatedVolunteerApplications;
+using Charity.Application.Features.V1.VolunteerApplications.Queries.GetProjectsPaginatedByRequestStatus;
 using Charity.Application.Features.V1.VolunteerApplications.Queries.GetVolunteerApplicationById;
 using Charity.Domain.Enum;
 using Charity.Models.ResponseModels;
@@ -48,10 +49,16 @@ namespace Charity.Api.Controllers.V1
             return NewResult(await Mediator.Send(new GetPaginatedVolunteerApplicationsQuery(pagination)));
         }
 
-        [HttpGet("GetPaginatedByRequestStatus")]
-        public async Task<IActionResult> GetPaginatedByRequestStatus([FromQuery] RequestStatus requestStatus, [FromQuery] PaginationModel pagination)
+        [HttpGet("GetProjectsPaginatedByRequestStatus")]
+        public async Task<IActionResult> GetProjectsPaginatedByRequestStatus([FromQuery] RequestStatus requestStatus, [FromQuery] PaginationModel pagination)
         {
-            return NewResult(await Mediator.Send(new GetPaginatedByRequestStatusQuery(requestStatus, pagination)));
+            return NewResult(await Mediator.Send(new GetProjectsPaginatedByRequestStatusQuery(requestStatus, pagination)));
+        }
+
+        [HttpGet("GetActivitiesPaginatedByRequestStatus")]
+        public async Task<IActionResult> GetActivitiesPaginatedByRequestStatus([FromQuery] RequestStatus requestStatus, [FromQuery] PaginationModel pagination)
+        {
+            return NewResult(await Mediator.Send(new GetActivitiesPaginatedByRequestStatusQuery(requestStatus, pagination)));
         }
 
         [HttpGet("GetVolunteerApplicationById")]

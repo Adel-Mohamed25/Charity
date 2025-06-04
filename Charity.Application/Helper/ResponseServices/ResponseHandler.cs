@@ -22,6 +22,40 @@ namespace Charity.Application.Helper.ResponseServices
             );
         }
 
+        public static Response<TData> Created<TData>(
+            TData data = null,
+            string message = null,
+            string meta = null,
+            string errors = null
+            ) where TData : class
+        {
+            return new Response<TData>(
+                statusCode: HttpStatusCode.Created,
+                issucceeded: true,
+                message: message ?? ResponseMessage.CreatedMessage,
+                data: data,
+                errors: errors ?? "There are no errors",
+                meta: meta
+                );
+        }
+
+        public static Response<TData> NoContent<TData>(
+           TData data = null,
+           string message = null,
+           string meta = null,
+           string errors = null
+           ) where TData : class
+        {
+            return new Response<TData>(
+                statusCode: HttpStatusCode.NoContent,
+                issucceeded: true,
+                message: message ?? ResponseMessage.NoContentMessage,
+                data: data,
+                errors: errors ?? "There are no errors",
+                meta: meta
+                );
+        }
+
         public static Response<TData> NotFound<TData>(
             TData data = null,
             string message = null,
@@ -100,12 +134,14 @@ namespace Charity.Application.Helper.ResponseServices
             return new Response<TData>(
                 statusCode: HttpStatusCode.InternalServerError,
                 issucceeded: false,
-                message: message ?? ResponseMessage.UnAuthorizedMessage,
+                message: message ?? ResponseMessage.InternalServerErrorMessage,
                 meta: meta,
                 data: data,
                 errors: errors ?? "Database connection failed"
             );
         }
+
+
 
 
     }

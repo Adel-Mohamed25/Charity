@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.Project;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.Project.Queries.GetAllProjects
@@ -34,8 +36,10 @@ namespace Charity.Application.Features.V1.Project.Queries.GetAllProjects
                 if (!projects.Any())
                     return ResponseHandler.NotFound<IEnumerable<ProjectModel>>(message: "Projects not found.");
 
-                var result = _mapper.Map<IEnumerable<ProjectModel>>(projects);
-                return ResponseHandler.Success(data: result);
+                var result = await projects.ProjectTo<ProjectModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {

@@ -26,7 +26,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.UnLockAccount
                     return ResponseHandler.NotFound<string>(errors: "User not found.");
                 await _unitOfWork.CharityUsers.UserManager.SetLockoutEndDateAsync(user, DateTime.UtcNow);
                 await _unitOfWork.CharityUsers.UserManager.ResetAccessFailedCountAsync(user);
-                return ResponseHandler.Success<string>(message: "User account has been successfully unlocked.");
+                return ResponseHandler.NoContent<string>(message: "User account has been successfully unlocked.");
             }
             catch (Exception ex)
             {

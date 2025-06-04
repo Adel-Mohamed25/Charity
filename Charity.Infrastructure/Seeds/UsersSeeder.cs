@@ -27,10 +27,10 @@ namespace Charity.Infrastructure.Seeds
             if (!await unitOfWork.CharityUsers.IsExistAsync(bu => bu.Email == defaultAdminUser.Email))
             {
                 await unitOfWork.CharityUsers.UserManager.CreateAsync(defaultAdminUser, "1Q2w3e4@");
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultAdminUser, UserRole.Beneficiary.ToString());
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultAdminUser, UserRole.Donor.ToString());
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultAdminUser, UserRole.Volunteer.ToString());
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultAdminUser, UserRole.Admin.ToString());
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultAdminUser, nameof(UserRole.Beneficiary));
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultAdminUser, nameof(UserRole.Donor));
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultAdminUser, nameof(UserRole.Volunteer));
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultAdminUser, nameof(UserRole.Admin));
             }
         }
 
@@ -51,18 +51,18 @@ namespace Charity.Infrastructure.Seeds
             if (!await unitOfWork.CharityUsers.IsExistAsync(bu => bu.Email == defaultSuperAdminUser.Email))
             {
                 await unitOfWork.CharityUsers.UserManager.CreateAsync(defaultSuperAdminUser, "1Q2w3e4@");
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, UserRole.Beneficiary.ToString());
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, UserRole.Donor.ToString());
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, UserRole.Volunteer.ToString());
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, UserRole.Admin.ToString());
-                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, UserRole.SuperAdmin.ToString());
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, nameof(UserRole.Beneficiary));
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, nameof(UserRole.Donor));
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, nameof(UserRole.Volunteer));
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, nameof(UserRole.Admin));
+                await unitOfWork.CharityUsers.UserManager.AddToRoleAsync(defaultSuperAdminUser, nameof(UserRole.SuperAdmin));
             }
             await unitOfWork.CharityRoles.RoleManager.SeedClaimsForSuperAdminAsync();
         }
 
         private static async Task SeedClaimsForSuperAdminAsync(this RoleManager<CharityRole> roleManager)
         {
-            var superAdminRole = await roleManager.FindByNameAsync(UserRole.SuperAdmin.ToString());
+            var superAdminRole = await roleManager.FindByNameAsync(nameof(UserRole.SuperAdmin));
             await roleManager.AddPermissionClaimsAsync(superAdminRole!, "Beneficiary");
         }
 

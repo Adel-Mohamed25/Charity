@@ -1,5 +1,4 @@
-﻿using Charity.Contracts.ServicesAbstraction;
-using Charity.Models.ResponseModels;
+﻿using Charity.Models.ResponseModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -13,15 +12,14 @@ namespace Charity.Api.Controllers.Common
         private IMediator _mediator;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
 
-        private IUnitOfService _unitOfService;
-        protected IUnitOfService UnitOfService => _unitOfService ??= HttpContext.RequestServices.GetRequiredService<IUnitOfService>();
-
 
         public ObjectResult NewResult<TData>(Response<TData> response) where TData : class
         {
             return response.StatusCode switch
             {
                 HttpStatusCode.OK => new OkObjectResult(response),
+                HttpStatusCode.Created => new OkObjectResult(response),
+                HttpStatusCode.NoContent => new OkObjectResult(response),
                 HttpStatusCode.NotFound => new NotFoundObjectResult(response),
                 HttpStatusCode.BadRequest => new BadRequestObjectResult(response),
                 HttpStatusCode.Unauthorized => new UnauthorizedObjectResult(response),

@@ -34,7 +34,7 @@ namespace Charity.Application.Features.V1.AidDistributions.Commands.UpdateAidDis
                 _mapper.Map(request.AidDistributionModel, aidDistribution);
                 await _unitOfWork.AidDistributions.UpdateAsync(aidDistribution, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The aidDistribution has been updated successfully.");
+                return ResponseHandler.NoContent<string>(message: "The aidDistribution has been updated successfully.");
             }
             catch (Exception ex)
             {

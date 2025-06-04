@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.Notification;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesBySendId
@@ -41,8 +43,10 @@ namespace Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesBy
                 if (!messages.Any())
                     return ResponseHandler.NotFound<IEnumerable<NotificationModel>>(message: "Not found any messages for this user.");
 
-                var result = _mapper.Map<IEnumerable<NotificationModel>>(messages);
-                return ResponseHandler.Success(data: result);
+                var result = await messages.ProjectTo<NotificationModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {

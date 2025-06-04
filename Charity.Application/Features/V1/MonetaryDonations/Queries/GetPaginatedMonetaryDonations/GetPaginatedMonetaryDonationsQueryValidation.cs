@@ -1,21 +1,16 @@
 ﻿using FluentValidation;
 
-namespace Charity.Application.Features.V1.VolunteerApplications.Queries.GetPaginatedByRequestStatus
+namespace Charity.Application.Features.V1.MonetaryDonations.Queries.GetPaginatedMonetaryDonations
 {
-    public class GetPaginatedByRequestStatusQueryValidation : AbstractValidator<GetPaginatedByRequestStatusQuery>
+    public class GetPaginatedMonetaryDonationsQueryValidation : AbstractValidator<GetPaginatedMonetaryDonationsQuery>
     {
-        public GetPaginatedByRequestStatusQueryValidation()
+        public GetPaginatedMonetaryDonationsQueryValidation()
         {
             ApplyValidationRules();
         }
 
         private void ApplyValidationRules()
         {
-            RuleFor(gp => gp.RequestStatus)
-                .NotNull().WithMessage(gp => $"{nameof(gp.RequestStatus)} can not be null.")
-                .NotEmpty().WithMessage(gp => $"{nameof(gp.RequestStatus)} can not be empty.")
-                .IsInEnum().WithMessage(gp => $"Invalid {nameof(gp.RequestStatus)} value. Allowed values are Approved (1), Rejected (2), Pending (3).");
-
             RuleFor(gp => gp.Pagination.PageNumber)
                 .NotNull().WithMessage(gp => $"{nameof(gp.Pagination.PageNumber)} can not be null.")
                 .NotEmpty().WithMessage(gp => $"{nameof(gp.Pagination.PageNumber)} can not be empty.")

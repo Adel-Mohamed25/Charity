@@ -41,7 +41,7 @@ namespace Charity.Application.Features.V1.ProjectVolunteers.Commands.AddVoluntee
                 var result = _mapper.Map<ProjectVolunteer>(request.ProjectVolunteer);
                 await _unitOfWork.ProjectVolunteers.CreateAsync(result, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The volunteer has been successfully added to the project.");
+                return ResponseHandler.Created<string>(message: "The volunteer has been successfully added to the project.");
             }
             catch (Exception ex)
             {

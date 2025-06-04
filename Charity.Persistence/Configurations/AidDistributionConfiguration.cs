@@ -1,4 +1,5 @@
 ﻿using Charity.Domain.Entities;
+using Charity.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,6 +10,18 @@ namespace Charity.Persistence.Configurations
         public void Configure(EntityTypeBuilder<AidDistribution> builder)
         {
             builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Description)
+                .HasMaxLength(500)
+                .IsRequired();
+
+            builder.Property(a => a.Status)
+                .HasConversion(a => a.ToString(),
+                a => Enum.Parse<AidDistributionStatus>(a))
+                .IsRequired();
+
+            builder.HasIndex(a => a.Status)
+                .HasDatabaseName("IX_AidDistribution_Status");
 
             builder.HasOne(a => a.Beneficiary)
                 .WithMany(u => u.ReceivedAids)

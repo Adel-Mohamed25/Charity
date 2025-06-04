@@ -31,7 +31,7 @@ namespace Charity.Application.Features.V1.VolunteerApplications.Commands.CreateV
                 var volunteerApplication = _mapper.Map<VolunteerApplication>(request.VolunteerApplicationModel);
                 await _unitOfWork.VolunteerApplications.CreateAsync(volunteerApplication, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The volunteer application has been created successfully.");
+                return ResponseHandler.Created<string>(message: "The volunteer application has been created successfully.");
 
             }
             catch (Exception ex)

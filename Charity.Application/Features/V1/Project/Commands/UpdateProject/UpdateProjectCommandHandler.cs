@@ -52,7 +52,7 @@ namespace Charity.Application.Features.V1.Project.Commands.UpdateProject
 
                 await _unitOfWork.Projects.UpdateAsync(project, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The project has been updated successfully.");
+                return ResponseHandler.NoContent<string>(message: "The project has been updated successfully.");
             }
             catch (Exception ex)
             {

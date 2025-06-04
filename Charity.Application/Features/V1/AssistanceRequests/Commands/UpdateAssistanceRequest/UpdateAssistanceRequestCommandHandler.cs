@@ -36,7 +36,7 @@ namespace Charity.Application.Features.V1.AssistanceRequests.Commands.UpdateAssi
                 _mapper.Map(request.AssistanceRequest, assistanceRequest);
                 await _unitOfWork.AssistanceRequests.UpdateAsync(assistanceRequest, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The assistance request has been updated successfully.");
+                return ResponseHandler.NoContent<string>(message: "The assistance request has been updated successfully.");
             }
             catch (Exception ex)
             {

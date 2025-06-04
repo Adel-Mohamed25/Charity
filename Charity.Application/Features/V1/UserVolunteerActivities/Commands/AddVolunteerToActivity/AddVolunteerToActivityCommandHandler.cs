@@ -40,7 +40,7 @@ namespace Charity.Application.Features.V1.UserVolunteerActivities.Commands.AddVo
                 var result = _mapper.Map<UserVolunteerActivity>(request.UserVolunteerActivity);
                 await _unitOfWork.UserVolunteerActivities.CreateAsync(result, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The volunteer has been successfully added to the volunteer activity.");
+                return ResponseHandler.Created<string>(message: "The volunteer has been successfully added to the volunteer activity.");
             }
             catch (Exception ex)
             {

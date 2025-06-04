@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Models.AidDistribution;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.AidDistributions.Queries.GetPaginatedAidDistributions
@@ -41,8 +43,9 @@ namespace Charity.Application.Features.V1.AidDistributions.Queries.GetPaginatedA
                        pageSize: request.Pagination.PageSize,
                        totalCount: await _unitOfWork.AidDistributions.CountAsync(cancellationToken: cancellationToken));
 
-                var data = _mapper.Map<IEnumerable<AidDistributionModel>>(aidDistributions);
-                return ResponsePaginationHandler.Success(data: data,
+                var data = await aidDistributions.ProjectTo<AidDistributionModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+                return ResponsePaginationHandler.Success(data: data.AsEnumerable(),
                     pageNumber: request.Pagination.PageNumber,
                     pageSize: request.Pagination.PageSize,
                     totalCount: await _unitOfWork.AidDistributions.CountAsync(cancellationToken: cancellationToken));

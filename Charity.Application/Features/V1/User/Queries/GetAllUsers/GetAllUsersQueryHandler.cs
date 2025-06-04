@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.ResponseModels;
 using Charity.Models.User;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.User.Queries.GetAllUsers
@@ -34,8 +36,10 @@ namespace Charity.Application.Features.V1.User.Queries.GetAllUsers
                 if (!users.Any())
                     return ResponseHandler.NotFound<IEnumerable<UserModel>>(message: "Not Found Users.");
 
-                var result = _mapper.Map<IEnumerable<UserModel>>(users);
-                return ResponseHandler.Success(data: result);
+                var result = await users.ProjectTo<UserModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {

@@ -16,6 +16,9 @@ namespace Charity.Persistence.Configurations
             builder.Property(va => va.ActivityDescription)
                 .IsRequired();
 
+            builder.HasIndex(va => va.Name)
+                .HasDatabaseName("IX_VolunteerActivity_Name");
+
             builder.HasOne(va => va.Organizer)
                 .WithMany(u => u.OrganizedVolunteerActivities)
                 .HasForeignKey(va => va.OrganizerId)

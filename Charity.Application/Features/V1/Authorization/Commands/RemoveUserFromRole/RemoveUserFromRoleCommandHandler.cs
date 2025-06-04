@@ -33,7 +33,7 @@ namespace Charity.Application.Features.V1.Authorization.Commands.RemoveUserFromR
 
                 IdentityResult result = await _unitOfWork.CharityUsers.UserManager.RemoveFromRoleAsync(user, role.Name!);
                 if (result.Succeeded)
-                    return ResponseHandler.Success<string>(message: "User removed to role Successfully.");
+                    return ResponseHandler.NoContent<string>(message: "User removed to role Successfully.");
 
                 return ResponseHandler.BadRequest<string>(errors: "Failed removing user to role.");
 

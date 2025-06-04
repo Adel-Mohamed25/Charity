@@ -32,7 +32,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.VerifyCode
                 var isvaild = await _unitOfService.AuthServices.VerifyCodeAsync(user, request.VerifyCode.Code);
                 if (!isvaild)
                     return ResponseHandler.BadRequest<string>(message: "Verification code not vaild.");
-                return ResponseHandler.Success<string>(message: "Verification code has been successfully verified.");
+                return ResponseHandler.NoContent<string>(message: "Verification code has been successfully verified.");
             }
             catch (Exception ex)
             {

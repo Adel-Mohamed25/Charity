@@ -44,6 +44,9 @@ namespace Charity.Persistence.Configurations.IdentityConfigurations
                 .HasConversion(u => u.ToString(),
                 u => Enum.Parse<GenderType>(u));
 
+            builder.HasIndex(u => u.FirstName)
+                .HasDatabaseName("IX_CharityUser_FirstName");
+
             builder.ToTable("CharityUsers");
         }
     }

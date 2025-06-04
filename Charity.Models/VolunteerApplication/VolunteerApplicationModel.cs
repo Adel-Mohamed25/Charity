@@ -10,7 +10,5 @@ namespace Charity.Models.VolunteerApplication
         public string? VolunteerActivityId { get; set; }
         public string? ProjectId { get; set; }
         public RequestStatus RequestStatus { get; set; }  // "Pending", "Approved", "Rejected"
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
     }
 }

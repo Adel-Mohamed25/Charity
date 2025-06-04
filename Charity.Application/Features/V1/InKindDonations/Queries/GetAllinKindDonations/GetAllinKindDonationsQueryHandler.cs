@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.InKindDonation;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.InKindDonations.Queries.GetAllinKindDonations
@@ -38,8 +40,10 @@ namespace Charity.Application.Features.V1.InKindDonations.Queries.GetAllinKindDo
                 if (!inKindDonations.Any())
                     return ResponseHandler.NotFound<IEnumerable<InKindDonationModel>>(message: "in-kind donations not found.");
 
-                var result = _mapper.Map<IEnumerable<InKindDonationModel>>(inKindDonations);
-                return ResponseHandler.Success(data: result);
+                var result = await inKindDonations.ProjectTo<InKindDonationModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {

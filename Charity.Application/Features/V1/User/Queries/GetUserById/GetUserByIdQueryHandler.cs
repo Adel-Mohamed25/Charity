@@ -32,6 +32,7 @@ namespace Charity.Application.Features.V1.User.Queries.GetUserById
                     return ResponseHandler.NotFound<UserModel>(message: "Not Found User.");
 
                 var result = _mapper.Map<UserModel>(user);
+
                 return ResponseHandler.Success(data: result);
 
             }

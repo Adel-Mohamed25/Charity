@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.AssistanceRequest;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.AssistanceRequests.Queries.GetAllAssistanceRequests
@@ -36,8 +38,12 @@ namespace Charity.Application.Features.V1.AssistanceRequests.Queries.GetAllAssis
                 if (!assistanceRequests.Any())
                     return ResponseHandler.NotFound<IEnumerable<AssistanceRequestModel>>(message: "Assistance requests not found.");
 
-                var result = _mapper.Map<IEnumerable<AssistanceRequestModel>>(assistanceRequests);
-                return ResponseHandler.Success(data: result);
+
+                var result = await assistanceRequests
+                    .ProjectTo<AssistanceRequestModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.ResponseModels;
 using Charity.Models.Role;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.Role.Queries.GetAllRoles
@@ -28,15 +30,17 @@ namespace Charity.Application.Features.V1.Role.Queries.GetAllRoles
         {
             try
             {
-                var users = await _unitOfWork.CharityRoles.GetAllAsync(orderBy: u => u.Name!,
+                var roles = await _unitOfWork.CharityRoles.GetAllAsync(orderBy: u => u.Name!,
                     orderByDirection: OrderByDirection.Ascending,
                     cancellationToken: cancellationToken);
 
-                if (!users.Any())
+                if (!roles.Any())
                     return ResponseHandler.NotFound<IEnumerable<RoleModel>>(message: "Not Found Roles.");
 
-                var result = _mapper.Map<IEnumerable<RoleModel>>(users);
-                return ResponseHandler.Success(data: result);
+                var result = await roles.ProjectTo<RoleModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {

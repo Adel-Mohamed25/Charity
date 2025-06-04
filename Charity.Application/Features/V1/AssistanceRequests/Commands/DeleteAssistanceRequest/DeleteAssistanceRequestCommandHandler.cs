@@ -33,7 +33,7 @@ namespace Charity.Application.Features.V1.AssistanceRequests.Commands.DeleteAssi
 
                 await _unitOfWork.AssistanceRequests.DeleteAsync(assistanceRequest, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The assistance request has been deleted successfully.");
+                return ResponseHandler.NoContent<string>(message: "The assistance request has been deleted successfully.");
             }
             catch (Exception ex)
             {

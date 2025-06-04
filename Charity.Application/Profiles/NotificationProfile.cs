@@ -19,6 +19,12 @@ namespace Charity.Application.Profiles
             CreateMap<CreateNotificationModel, Notification>()
                 .ForMember(des => des.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(des => des.IsRead, opt => opt.MapFrom(src => false));
+
+            CreateMap<Notification, UpdateNotificationModel>();
+            CreateMap<UpdateNotificationModel, Notification>()
+                .ForMember(des => des.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now));
+
+
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Charity.Application.Features.V1.Notifications.Commands.MakeMessageIsRe
                 message.ModifiedDate = DateTime.Now;
                 await _unitOfWork.Notifications.UpdateAsync(message, cancellationToken: cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken: cancellationToken);
-                return ResponseHandler.Success<string>(message: "The message has been read successfully.");
+                return ResponseHandler.NoContent<string>(message: "The message has been read successfully.");
             }
             catch (Exception ex)
             {

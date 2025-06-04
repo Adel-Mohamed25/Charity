@@ -5,6 +5,8 @@ using Charity.Application.Features.V1.AidDistributions.Commands.UpdateAidDistrib
 using Charity.Application.Features.V1.AidDistributions.Queries.GetAidDistributionById;
 using Charity.Application.Features.V1.AidDistributions.Queries.GetAllAidDistributions;
 using Charity.Application.Features.V1.AidDistributions.Queries.GetPaginatedAidDistributions;
+using Charity.Application.Features.V1.AidDistributions.Queries.GetPaginatedAidDistributionsByStatus;
+using Charity.Domain.Enum;
 using Charity.Models.AidDistribution;
 using Charity.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
@@ -50,6 +52,13 @@ namespace Charity.Api.Controllers.V1
         public async Task<IActionResult> GetAidDistributionById([FromQuery] string id)
         {
             return NewResult(await Mediator.Send(new GetAidDistributionByIdQuery(id)));
+        }
+
+        [HttpGet("GetPaginatedAidDistributionsByStatus")]
+        public async Task<IActionResult> GetPaginatedAidDistributionsByStatus([FromQuery] AidDistributionStatus status,
+            [FromQuery] PaginationModel pagination)
+        {
+            return NewResult(await Mediator.Send(new GetPaginatedAidDistributionsByStatusQuery(status, pagination)));
         }
     }
 }

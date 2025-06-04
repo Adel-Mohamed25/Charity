@@ -30,7 +30,7 @@ namespace Charity.Application.Features.V1.Role.Commands.DeleteRole
                 IdentityResult result = await _unitOfWork.CharityRoles.RoleManager.DeleteAsync(role);
                 if (!result.Succeeded)
                     return ResponseHandler.BadRequest<string>(errors: "An error occurred while deleting the role.");
-                return ResponseHandler.Success<string>(message: "The role has been deleted successfully.");
+                return ResponseHandler.NoContent<string>(message: "The role has been deleted successfully.");
 
             }
             catch (Exception ex)

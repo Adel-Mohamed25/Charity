@@ -32,7 +32,7 @@ namespace Charity.Application.Features.V1.AidDistributions.Commands.DeleteAidDis
 
                 await _unitOfWork.AidDistributions.DeleteAsync(aidDistribution, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The aidDistribution has been deleted successfully.");
+                return ResponseHandler.NoContent<string>(message: "The aidDistribution has been deleted successfully.");
             }
             catch (Exception ex)
             {

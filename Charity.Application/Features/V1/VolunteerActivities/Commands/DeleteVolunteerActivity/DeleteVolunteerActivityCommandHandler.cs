@@ -31,7 +31,7 @@ namespace Charity.Application.Features.V1.VolunteerActivities.Commands.DeleteVol
 
                 await _unitOfWork.VolunteerActivities.DeleteAsync(volunteerActivity, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The volunteer activity has been deleted successfully.");
+                return ResponseHandler.NoContent<string>(message: "The volunteer activity has been deleted successfully.");
             }
             catch (Exception ex)
             {

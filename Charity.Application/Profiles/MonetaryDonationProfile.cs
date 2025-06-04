@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Charity.Domain.Entities;
+using Charity.Models.MonetaryDonation;
 
 namespace Charity.Application.Profiles
 {
@@ -6,12 +8,12 @@ namespace Charity.Application.Profiles
     {
         public MonetaryDonationProfile()
         {
-            //Map();
+            Map();
         }
 
-        //private void Map()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private void Map()
+        {
+            CreateMap<MonetaryDonation, MonetaryDonationModel>().ReverseMap();
+        }
     }
 }

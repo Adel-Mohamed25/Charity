@@ -1,4 +1,5 @@
-﻿using Charity.Models.ResponseModels;
+﻿using Charity.Application.Constants;
+using Charity.Models.ResponseModels;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,7 @@ namespace Charity.Application.MiddleWares
 
             var (message, statusCode) = exception switch
             {
-                UnauthorizedAccessException e => (e.Message, HttpStatusCode.Unauthorized),
+                UnauthorizedAccessException e => (e.Message + "" + ResponseMessage.UnAuthorizedMessage, HttpStatusCode.Unauthorized),
                 ValidationException e => (e.Message, HttpStatusCode.UnprocessableEntity),
                 KeyNotFoundException e => (e.Message, HttpStatusCode.NotFound),
                 BadHttpRequestException e => (e.Message, HttpStatusCode.BadRequest),

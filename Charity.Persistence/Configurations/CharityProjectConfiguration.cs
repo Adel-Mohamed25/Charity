@@ -15,8 +15,6 @@ namespace Charity.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(200);
 
-            builder.HasIndex(c => c.Name)
-                .IsUnique();
 
             builder.Property(c => c.Description)
                 .IsRequired();
@@ -33,12 +31,16 @@ namespace Charity.Persistence.Configurations
                 .HasPrecision(18, 2);
 
             builder.Property(c => c.ProjectStatus)
-                .IsRequired()
                 .HasConversion(c => c.ToString(),
-                c => Enum.Parse<ProjectStatus>(c));
+                c => Enum.Parse<ProjectStatus>(c))
+                .IsRequired();
 
             builder.Property(c => c.ManagerId)
                 .IsRequired();
+
+            builder.HasIndex(c => c.Name)
+                .HasDatabaseName("IX_CharityProject_Name")
+                .IsUnique();
 
 
             builder.HasOne(cp => cp.Manager)

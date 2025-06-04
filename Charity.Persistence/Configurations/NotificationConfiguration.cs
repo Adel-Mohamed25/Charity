@@ -17,6 +17,15 @@ namespace Charity.Persistence.Configurations
             builder.Property(n => n.Message)
                 .IsRequired(false);
 
+            builder.HasIndex(n => n.ReceiverId)
+                .HasDatabaseName("IX_Notification_ReceiverId");
+
+            builder.HasIndex(n => n.SenderId)
+                .HasDatabaseName("IX_Notification_SenderId");
+
+            builder.HasIndex(n => n.CreatedDate)
+                .HasDatabaseName("IX_Notification_CreatedDate");
+
 
             builder.HasOne(n => n.Sender)
                 .WithMany(n => n.SentNotifications)

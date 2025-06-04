@@ -44,9 +44,9 @@ namespace Charity.Api.Controllers.V1
         }
 
         [HttpGet("GetAllAssistanceRequestsById")]
-        public async Task<IActionResult> GetAllAssistanceRequestsById(string id)
+        public async Task<IActionResult> GetAllAssistanceRequestsById([FromQuery] string beneficiaryId)
         {
-            return NewResult(await Mediator.Send(new GetAllAssistanceRequestsByIdQuery(id)));
+            return NewResult(await Mediator.Send(new GetAllAssistanceRequestsByIdQuery(beneficiaryId)));
         }
 
         [HttpGet("GetPaginatedAssistanceRequests")]

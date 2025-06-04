@@ -10,7 +10,7 @@
         public const string ConflictErrorMessage = "The request could not be completed due to a conflict.";
         public const string ForbiddenMessage = "Access to the resource is forbidden.";
         public const string CreatedMessage = "The resource was created successfully.";
-        public const string NoContentMessage = "The request was successful, but there is no content to return.";
+        public const string NoContentMessage = "The operation was successful, but there is no data to return.";
         public const string ValidationErrorMessage = "One or more validation errors occurred.";
     }
 }

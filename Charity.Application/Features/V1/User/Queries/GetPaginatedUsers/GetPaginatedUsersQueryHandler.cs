@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Models.ResponseModels;
 using Charity.Models.User;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.User.Queries.GetPaginatedUsers
@@ -41,8 +43,10 @@ namespace Charity.Application.Features.V1.User.Queries.GetPaginatedUsers
                        pageSize: request.Pagination.PageSize,
                        totalCount: await _unitOfWork.CharityUsers.CountAsync(cancellationToken: cancellationToken));
 
-                var data = _mapper.Map<IEnumerable<UserModel>>(users);
-                return ResponsePaginationHandler.Success(data: data,
+                var data = await users.ProjectTo<UserModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponsePaginationHandler.Success(data: data.AsEnumerable(),
                     pageNumber: request.Pagination.PageNumber,
                     pageSize: request.Pagination.PageSize,
                     totalCount: await _unitOfWork.CharityUsers.CountAsync(cancellationToken: cancellationToken));

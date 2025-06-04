@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Models.ResponseModels;
 using Charity.Models.User;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.UserVolunteerActivities.Queries.GetAllVolunteersInActivity
@@ -39,8 +41,10 @@ namespace Charity.Application.Features.V1.UserVolunteerActivities.Queries.GetAll
                 if (!userVolunteerActivities.Any())
                     return ResponseHandler.NotFound<IEnumerable<VolunteerModel>>(message: "There are no volunteers in this volunteer activity.");
 
-                var result = _mapper.Map<IEnumerable<VolunteerModel>>(userVolunteerActivities);
-                return ResponseHandler.Success(data: result);
+                var result = await userVolunteerActivities.ProjectTo<VolunteerModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
 
             }
             catch (Exception ex)

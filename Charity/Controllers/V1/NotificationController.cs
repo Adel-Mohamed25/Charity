@@ -1,7 +1,9 @@
 ﻿using Charity.Api.Controllers.Common;
+using Charity.Application.Features.V1.Notifications.Commands.DeleteMessage;
 using Charity.Application.Features.V1.Notifications.Commands.MakeMessageIsRead;
 using Charity.Application.Features.V1.Notifications.Commands.SendToAll;
 using Charity.Application.Features.V1.Notifications.Commands.SendToUser;
+using Charity.Application.Features.V1.Notifications.Commands.UpdateMessage;
 using Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesByReceiveId;
 using Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesBySendId;
 using Charity.Application.Features.V1.Notifications.Queries.GetCountMessagesById;
@@ -49,6 +51,18 @@ namespace Charity.Api.Controllers.V1
         public async Task<IActionResult> GetCountMessagesById([FromQuery] string receiveId)
         {
             return NewResult(await Mediator.Send(new GetCountMessagesByIdCommand(receiveId)));
+        }
+
+        [HttpPut("UpdateMessage")]
+        public async Task<IActionResult> UpdateMessage([FromBody] UpdateNotificationModel notificationModel)
+        {
+            return NewResult(await Mediator.Send(new UpdateMessageCommand(notificationModel)));
+        }
+
+        [HttpDelete("DeleteMessage")]
+        public async Task<IActionResult> DeleteMessage([FromQuery] string messageId)
+        {
+            return NewResult(await Mediator.Send(new DeleteMessageCommand(messageId)));
         }
 
         //[HttpPost("send-to-all-except")]

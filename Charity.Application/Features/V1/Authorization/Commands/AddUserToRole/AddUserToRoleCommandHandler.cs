@@ -33,7 +33,7 @@ namespace Charity.Application.Features.V1.Authorization.Commands.AddUserToRole
 
                 IdentityResult result = await _unitOfWork.CharityUsers.UserManager.AddToRoleAsync(user, role.Name!);
                 if (result.Succeeded)
-                    return ResponseHandler.Success<string>(message: "User added to role Successfully.");
+                    return ResponseHandler.Created<string>(message: "User added to role Successfully.");
 
                 return ResponseHandler.BadRequest<string>(errors: "Failed adding user to role.");
 

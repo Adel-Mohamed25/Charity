@@ -10,6 +10,12 @@ namespace Charity.Persistence.Configurations
         {
             builder.HasKey(uv => new { uv.UserId, uv.VolunteerActivityId });
 
+            builder.HasIndex(uv => uv.UserId)
+                .HasDatabaseName("IX_UserVolunteerActivity_UserId");
+
+            builder.HasIndex(uv => uv.VolunteerActivityId)
+                .HasDatabaseName("IX_UserVolunteerActivity_VolunteerActivityId");
+
             builder.HasOne(uv => uv.User)
                 .WithMany(u => u.VolunteerActivities)
                 .HasForeignKey(uv => uv.UserId)

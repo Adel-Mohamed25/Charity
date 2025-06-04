@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.AidDistribution;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.AidDistributions.Queries.GetAllAidDistributions
@@ -36,8 +38,10 @@ namespace Charity.Application.Features.V1.AidDistributions.Queries.GetAllAidDist
                 if (!aidDistributions.Any())
                     return ResponseHandler.NotFound<IEnumerable<AidDistributionModel>>(message: "AidDistributions not found.");
 
-                var result = _mapper.Map<IEnumerable<AidDistributionModel>>(aidDistributions);
-                return ResponseHandler.Success(data: result);
+                var result = await aidDistributions.ProjectTo<AidDistributionModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {

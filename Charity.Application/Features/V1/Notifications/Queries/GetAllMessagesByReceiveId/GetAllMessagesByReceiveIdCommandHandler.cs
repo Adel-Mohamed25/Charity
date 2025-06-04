@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Domain.Enum;
 using Charity.Models.Notification;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesByReceiveId
@@ -31,7 +33,8 @@ namespace Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesBy
                 if (!await _unitOfWork.CharityUsers.IsExistAsync(u => u.Id.Equals(request.ReceiveId)))
                     return ResponseHandler.NotFound<IEnumerable<NotificationModel>>(message: "User not found.");
 
-                var messages = await _unitOfWork.Notifications.GetAllAsync(n => n.ReceiverId!.Equals(request.ReceiveId),
+                var messages = await _unitOfWork.Notifications.GetAllAsync(n => n.ReceiverId!.Equals(request.ReceiveId)
+                                                                  || n.ReceiverId == null,
                                                                   orderBy: n => n.CreatedDate!,
                                                                   orderByDirection: OrderByDirection.Descending,
                                                                   cancellationToken: cancellationToken);
@@ -39,8 +42,10 @@ namespace Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesBy
                 if (!messages.Any())
                     return ResponseHandler.NotFound<IEnumerable<NotificationModel>>(message: "Not found any messages for this user.");
 
-                var result = _mapper.Map<IEnumerable<NotificationModel>>(messages);
-                return ResponseHandler.Success(data: result);
+                var result = await messages.ProjectTo<NotificationModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponseHandler.Success(data: result.AsEnumerable());
             }
             catch (Exception ex)
             {

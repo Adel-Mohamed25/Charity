@@ -4,5 +4,5 @@ using MediatR;
 
 namespace Charity.Application.Features.V1.AssistanceRequests.Queries.GetAllAssistanceRequestsById
 {
-    public record GetAllAssistanceRequestsByIdQuery(string Id) : IRequest<Response<IEnumerable<AssistanceRequestModel>>>;
+    public record GetAllAssistanceRequestsByIdQuery(string BeneficiaryId) : IRequest<Response<IEnumerable<AssistanceRequestModel>>>;
 }

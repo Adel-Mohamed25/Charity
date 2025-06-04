@@ -14,6 +14,9 @@ namespace Charity.Persistence.Configurations
                 .IsRequired()
                 .HasPrecision(10, 4);
 
+            builder.HasIndex(md => md.DonorId)
+                .HasDatabaseName("IX_MonetaryDonation_DonorId");
+
 
             builder.HasOne(md => md.Donor)
                 .WithMany(u => u.MonetaryDonations)

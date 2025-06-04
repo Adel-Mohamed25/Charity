@@ -39,7 +39,7 @@ namespace Charity.Application.Features.V1.ProjectVolunteers.Commands.RemoveVolun
                 var result = _mapper.Map<ProjectVolunteer>(request.ProjectVolunteer);
                 await _unitOfWork.ProjectVolunteers.DeleteAsync(result, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The volunteer has been successfully removed from the project.");
+                return ResponseHandler.NoContent<string>(message: "The volunteer has been successfully removed from the project.");
             }
             catch (Exception ex)
             {

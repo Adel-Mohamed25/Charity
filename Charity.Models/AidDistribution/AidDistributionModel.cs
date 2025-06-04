@@ -1,4 +1,6 @@
-﻿namespace Charity.Models.AidDistribution
+﻿using Charity.Domain.Enum;
+
+namespace Charity.Models.AidDistribution
 {
     public class AidDistributionModel
     {
@@ -7,7 +9,7 @@
         public string? MonetaryDonationId { get; set; }
         public string? InKindDonationId { get; set; }
         public string VolunteerId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public string Description { get; set; }
+        public AidDistributionStatus Status { get; set; }
     }
 }

@@ -30,6 +30,11 @@ namespace Charity.Application.Features.V1.AidDistributions.Commands.CreateAidDis
             RuleFor(ad => ad.AidDistributionModel.MonetaryDonationId)
                 .MaximumLength(36).WithMessage(ad => $"{nameof(ad.AidDistributionModel.MonetaryDonationId)} can not exceed 36 Characters.")
                 .MinimumLength(36).WithMessage(ad => $"{nameof(ad.AidDistributionModel.MonetaryDonationId)} can not less than 36 Characters.");
+
+            RuleFor(ad => ad.AidDistributionModel.Description)
+                .NotNull().WithMessage(ad => $"{nameof(ad.AidDistributionModel.Description)} can not be null.")
+                .NotEmpty().WithMessage(ad => $"{nameof(ad.AidDistributionModel.Description)} can not be empty.")
+                .MaximumLength(500).WithMessage(ad => $"{nameof(ad.AidDistributionModel.Description)} can not exceed 500 Characters.");
         }
     }
 }

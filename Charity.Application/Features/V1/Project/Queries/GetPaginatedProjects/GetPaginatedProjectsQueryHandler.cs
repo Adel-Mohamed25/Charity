@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Models.Project;
 using Charity.Models.ResponseModels;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.Project.Queries.GetPaginatedProjects
@@ -40,8 +42,10 @@ namespace Charity.Application.Features.V1.Project.Queries.GetPaginatedProjects
                        pageSize: request.Pagination.PageSize,
                        totalCount: await _unitOfWork.Projects.CountAsync(cancellationToken: cancellationToken));
 
-                var data = _mapper.Map<IEnumerable<ProjectModel>>(projects);
-                return ResponsePaginationHandler.Success(data: data,
+                var data = await projects.ProjectTo<ProjectModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponsePaginationHandler.Success(data: data.AsEnumerable(),
                     pageNumber: request.Pagination.PageNumber,
                     pageSize: request.Pagination.PageSize,
                     totalCount: await _unitOfWork.Projects.CountAsync(cancellationToken: cancellationToken));

@@ -55,7 +55,7 @@ namespace Charity.Application.Features.V1.User.Commands.UpdateUser
                 IdentityResult result = await _unitOfWork.CharityUsers.UserManager.UpdateAsync(user);
                 if (!result.Succeeded)
                     return ResponseHandler.Conflict<string>(message: "Check your input data.");
-                return ResponseHandler.Success<string>(message: "The user has been updated successfully");
+                return ResponseHandler.NoContent<string>(message: "The user has been updated successfully");
 
             }
             catch (Exception ex)

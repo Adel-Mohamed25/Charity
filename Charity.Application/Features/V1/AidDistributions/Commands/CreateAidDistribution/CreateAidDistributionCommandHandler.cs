@@ -29,7 +29,7 @@ namespace Charity.Application.Features.V1.AidDistributions.Commands.CreateAidDis
                 var aidDistribution = _mapper.Map<AidDistribution>(request.AidDistributionModel);
                 await _unitOfWork.AidDistributions.CreateAsync(aidDistribution, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The aidDistribution has been created successfully.");
+                return ResponseHandler.Created<string>(message: "The aidDistribution has been created successfully.");
 
             }
             catch (Exception ex)

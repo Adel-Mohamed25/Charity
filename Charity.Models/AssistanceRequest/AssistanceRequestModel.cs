@@ -9,7 +9,6 @@ namespace Charity.Models.AssistanceRequest
         public string? RequestDetails { get; set; }
         public string? InKindDonationId { get; set; }
         public RequestStatus RequestStatus { get; set; }  // "Pending", "Approved", "Rejected"
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+
     }
 }

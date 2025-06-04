@@ -1,10 +1,11 @@
-﻿using FluentValidation;
+﻿using Charity.Application.Features.V1.AidDistributions.Commands.UpdateAidDistribution;
+using FluentValidation;
 
-namespace Charity.Application.Features.V1.AidDistributions.Commands.UpdateAidDistribution
+namespace Charity.Application.Features.V1.AidDistributions.Commands.addateAidDistribution
 {
-    public class UpdateAidDistributionCommandValidation : AbstractValidator<UpdateAidDistributionCommand>
+    public class addateAidDistributionCommandValidation : AbstractValidator<UpdateAidDistributionCommand>
     {
-        public UpdateAidDistributionCommandValidation()
+        public addateAidDistributionCommandValidation()
         {
             ApplyValidationRules();
         }
@@ -30,6 +31,16 @@ namespace Charity.Application.Features.V1.AidDistributions.Commands.UpdateAidDis
             RuleFor(ad => ad.AidDistributionModel.MonetaryDonationId)
                 .MaximumLength(36).WithMessage(ad => $"{nameof(ad.AidDistributionModel.MonetaryDonationId)} can not exceed 36 Characters.")
                 .MinimumLength(36).WithMessage(ad => $"{nameof(ad.AidDistributionModel.MonetaryDonationId)} can not less than 36 Characters.");
+
+            RuleFor(ad => ad.AidDistributionModel.Description)
+                .NotNull().WithMessage(ad => $"{nameof(ad.AidDistributionModel.Description)} can not be null.")
+                .NotEmpty().WithMessage(ad => $"{nameof(ad.AidDistributionModel.Description)} can not be empty.")
+                .MaximumLength(500).WithMessage(ad => $"{nameof(ad.AidDistributionModel.Description)} can not exceed 500 Characters.");
+
+            RuleFor(ad => ad.AidDistributionModel.Status)
+                .NotNull().WithMessage(ad => $"{nameof(ad.AidDistributionModel.Status)} can not be null.")
+                .NotEmpty().WithMessage(ad => $"{nameof(ad.AidDistributionModel.Status)} can not be empty.")
+                .IsInEnum().WithMessage(ad => $"Invalid {nameof(ad.AidDistributionModel.Status)} value. Allowed values are Done (1), InProgress (2), PostPoned (3).");
         }
     }
 }

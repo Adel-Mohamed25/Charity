@@ -40,7 +40,7 @@ namespace Charity.Application.Features.V1.UserVolunteerActivities.Commands.Remov
                 var result = _mapper.Map<UserVolunteerActivity>(request.UserVolunteerActivity);
                 await _unitOfWork.UserVolunteerActivities.DeleteAsync(result, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The volunteer has been successfully removed from the activity.");
+                return ResponseHandler.NoContent<string>(message: "The volunteer has been successfully removed from the activity.");
             }
             catch (Exception ex)
             {

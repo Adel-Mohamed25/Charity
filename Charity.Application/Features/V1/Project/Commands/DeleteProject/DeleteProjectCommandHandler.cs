@@ -38,7 +38,7 @@ namespace Charity.Application.Features.V1.Project.Commands.DeleteProject
 
                 await _unitOfWork.Projects.DeleteAsync(project, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The project has been deleted successfully.");
+                return ResponseHandler.NoContent<string>(message: "The project has been deleted successfully.");
             }
             catch (Exception ex)
             {

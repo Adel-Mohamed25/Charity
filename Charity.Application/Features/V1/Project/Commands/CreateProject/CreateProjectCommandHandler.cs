@@ -39,7 +39,7 @@ namespace Charity.Application.Features.V1.Project.Commands.CreateProject
                 }
                 await _unitOfWork.Projects.CreateAsync(project, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The project has been created successfully.");
+                return ResponseHandler.Created<string>(message: "The project has been created successfully.");
 
             }
             catch (Exception ex)

@@ -64,7 +64,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.GenerateVerify
 
                 var emaiModel = await _unitOfService.EmailServices.SendEmailAsync(emailModel);
                 if (emaiModel.IsSuccess)
-                    return ResponseHandler.Success<string>(message: "Verification code sent successfully.");
+                    return ResponseHandler.NoContent<string>(message: "Verification code sent successfully.");
                 return ResponseHandler.Conflict<string>(message: "Failed to send confirmation email");
             }
             catch (Exception ex)

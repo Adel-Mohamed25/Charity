@@ -23,13 +23,13 @@ namespace Charity.Application.Features.V1.MonetaryDonations.Commands.CreatePayme
         {
             try
             {
-                var sessionId = await _unitOfService.PaymentServices
-                    .CreatePaymentIntentAsync(request.amount, request.donorId, request.projectId);
-                return ResponseHandler.Success(data: sessionId);
+                var clientSecret = await _unitOfService.PaymentServices
+                    .CreatePaymentIntentAsync(request.PaymentModel);
+                return ResponseHandler.Created(data: clientSecret);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occured during create checkout session.");
+                _logger.LogError(ex, "Error occured during create paymentIntent.");
                 return ResponseHandler.BadRequest<string>(message: ex.Message);
             }
         }

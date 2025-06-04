@@ -33,7 +33,7 @@ namespace Charity.Application.Features.V1.VolunteerApplications.Commands.DeleteV
 
                 await _unitOfWork.VolunteerApplications.DeleteAsync(volunteerApplication, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The volunteer application has been deleted successfully.");
+                return ResponseHandler.NoContent<string>(message: "The volunteer application has been deleted successfully.");
             }
             catch (Exception ex)
             {

@@ -34,6 +34,11 @@ namespace Charity.Persistence.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("InKindDonationId")
                         .HasColumnType("nvarchar(450)");
 
@@ -41,6 +46,10 @@ namespace Charity.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MonetaryDonationId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("VolunteerId")
@@ -54,6 +63,9 @@ namespace Charity.Persistence.Migrations
                     b.HasIndex("InKindDonationId");
 
                     b.HasIndex("MonetaryDonationId");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("IX_AidDistribution_Status");
 
                     b.HasIndex("VolunteerId");
 
@@ -83,13 +95,17 @@ namespace Charity.Persistence.Migrations
 
                     b.Property<string>("RequestStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BeneficiaryId");
+                    b.HasIndex("BeneficiaryId")
+                        .HasDatabaseName("IX_AssistanceRequest_BeneficiaryId");
 
                     b.HasIndex("InKindDonationId");
+
+                    b.HasIndex("RequestStatus")
+                        .HasDatabaseName("IX_AssistanceRequest_RequestStatus");
 
                     b.ToTable("AssistanceRequests", (string)null);
                 });
@@ -140,7 +156,8 @@ namespace Charity.Persistence.Migrations
                     b.HasIndex("ManagerId");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("IX_CharityProject_Name");
 
                     b.ToTable("CharityProjects", (string)null);
                 });
@@ -265,6 +282,9 @@ namespace Charity.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FirstName")
+                        .HasDatabaseName("IX_CharityUser_FirstName");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -388,24 +408,27 @@ namespace Charity.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("IsAllocated")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsPaymentConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentMethod")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymentIntentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProjectId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DonorId");
+                    b.HasIndex("DonorId")
+                        .HasDatabaseName("IX_MonetaryDonation_DonorId");
 
                     b.HasIndex("ProjectId");
 
@@ -438,9 +461,14 @@ namespace Charity.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReceiverId");
+                    b.HasIndex("CreatedDate")
+                        .HasDatabaseName("IX_Notification_CreatedDate");
 
-                    b.HasIndex("SenderId");
+                    b.HasIndex("ReceiverId")
+                        .HasDatabaseName("IX_Notification_ReceiverId");
+
+                    b.HasIndex("SenderId")
+                        .HasDatabaseName("IX_Notification_SenderId");
 
                     b.ToTable("Notifications", (string)null);
                 });
@@ -458,7 +486,11 @@ namespace Charity.Persistence.Migrations
 
                     b.HasKey("ProjectId", "VolunteerId");
 
-                    b.HasIndex("VolunteerId");
+                    b.HasIndex("ProjectId")
+                        .HasDatabaseName("IX_ProjectVolunteer_ProjectId");
+
+                    b.HasIndex("VolunteerId")
+                        .HasDatabaseName("IX_ProjectVolunteer_VolunteerId");
 
                     b.ToTable("ProjectVolunteers", (string)null);
                 });
@@ -476,7 +508,11 @@ namespace Charity.Persistence.Migrations
 
                     b.HasKey("UserId", "VolunteerActivityId");
 
-                    b.HasIndex("VolunteerActivityId");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_UserVolunteerActivity_UserId");
+
+                    b.HasIndex("VolunteerActivityId")
+                        .HasDatabaseName("IX_UserVolunteerActivity_VolunteerActivityId");
 
                     b.ToTable("UserVolunteerActivities", (string)null);
                 });
@@ -498,13 +534,16 @@ namespace Charity.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("OrganizerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .HasDatabaseName("IX_VolunteerActivity_Name");
 
                     b.HasIndex("OrganizerId");
 
@@ -530,7 +569,7 @@ namespace Charity.Persistence.Migrations
 
                     b.Property<string>("RequestStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("VolunteerActivityId")
                         .HasColumnType("nvarchar(450)");
@@ -541,9 +580,14 @@ namespace Charity.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("ProjectId")
+                        .HasDatabaseName("IX_VolunteerApplication_ProjectId");
 
-                    b.HasIndex("VolunteerActivityId");
+                    b.HasIndex("RequestStatus")
+                        .HasDatabaseName("IX_VolunteerApplication_RequestStatus");
+
+                    b.HasIndex("VolunteerActivityId")
+                        .HasDatabaseName("IX_VolunteerApplication_VolunteerActivityId");
 
                     b.HasIndex("VolunteerId");
 

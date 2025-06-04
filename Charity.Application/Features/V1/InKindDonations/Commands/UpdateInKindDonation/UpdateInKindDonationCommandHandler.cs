@@ -72,7 +72,7 @@ namespace Charity.Application.Features.V1.InKindDonations.Commands.UpdateInKindD
                 await _unitOfWork.InKindDonations.UpdateAsync(inKindDonation, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-                return ResponseHandler.Success<string>(message: "The in-kind donation has been updated successfully.");
+                return ResponseHandler.NoContent<string>(message: "The in-kind donation has been updated successfully.");
             }
             catch (Exception ex)
             {

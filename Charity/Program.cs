@@ -45,9 +45,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins", builder =>
     {
-        builder.AllowAnyOrigin();
+        builder.WithOrigins("http://localhost:4200", "https://charity-project-delta.vercel.app");
         builder.AllowAnyMethod();
         builder.AllowAnyHeader();
+        builder.AllowCredentials();
     });
 });
 

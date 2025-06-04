@@ -20,7 +20,12 @@ namespace Charity.Application.Mapper
             CreateMap<UserModel, CharityUser>();
             CreateMap<CharityUser, UserModel>()
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
-                    src.DateOfBirth.HasValue ? (int)((DateTime.UtcNow - src.DateOfBirth.Value).TotalDays / 365.25) : 0));
+                    src.DateOfBirth.HasValue ? (int)((DateTime.UtcNow - src.DateOfBirth.Value).TotalDays / 365.25) : 0))
+                .ForMember(dest => dest.IsLocked,
+                opt => opt.MapFrom(src =>
+                src.LockoutEnabled &&
+                src.LockoutEnd.HasValue &&
+                src.LockoutEnd > DateTimeOffset.UtcNow));
 
             CreateMap<CharityUser, UpdateUserModel>();
             CreateMap<UpdateUserModel, CharityUser>()

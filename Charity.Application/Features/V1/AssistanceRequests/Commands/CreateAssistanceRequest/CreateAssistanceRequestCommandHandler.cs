@@ -31,7 +31,7 @@ namespace Charity.Application.Features.V1.AssistanceRequests.Commands.CreateAssi
                 var assistancerequest = _mapper.Map<AssistanceRequest>(request.CreateAssistance);
                 await _unitOfWork.AssistanceRequests.CreateAsync(assistancerequest, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The assistance request has been created successfully.");
+                return ResponseHandler.Created<string>(message: "The assistance request has been created successfully.");
 
             }
             catch (Exception ex)

@@ -10,11 +10,11 @@ namespace Charity.Infrastructure.Seeds
         {
             if (!await unitOfWork.CharityRoles.IsExistAsync())
             {
-                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.SuperAdmin.ToString() });
-                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.Admin.ToString() });
-                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.Beneficiary.ToString() });
-                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.Donor.ToString() });
-                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = UserRole.Volunteer.ToString() });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = nameof(UserRole.SuperAdmin) });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = nameof(UserRole.Admin) });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = nameof(UserRole.Beneficiary) });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = nameof(UserRole.Donor) });
+                await unitOfWork.CharityRoles.RoleManager.CreateAsync(new CharityRole { Name = nameof(UserRole.Volunteer) });
             }
         }
     }

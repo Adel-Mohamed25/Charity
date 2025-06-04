@@ -16,7 +16,5 @@ namespace Charity.Models.Project
         public DateTime? EndDate { get; set; }
         public string ManagerId { get; set; }
 
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
     }
 }

@@ -19,6 +19,15 @@ namespace Charity.Persistence.Configurations
                 .HasConversion(va => va.ToString(),
                 va => Enum.Parse<RequestStatus>(va));
 
+            builder.HasIndex(va => va.RequestStatus)
+                .HasDatabaseName("IX_VolunteerApplication_RequestStatus");
+
+            builder.HasIndex(va => va.VolunteerActivityId)
+                .HasDatabaseName("IX_VolunteerApplication_VolunteerActivityId");
+
+            builder.HasIndex(va => va.ProjectId)
+                .HasDatabaseName("IX_VolunteerApplication_ProjectId");
+
             builder.HasOne(va => va.Volunteer)
                 .WithMany(u => u.VolunteerApplications)
                 .HasForeignKey(va => va.VolunteerId)

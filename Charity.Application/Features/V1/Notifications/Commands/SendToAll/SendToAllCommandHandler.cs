@@ -34,7 +34,7 @@ namespace Charity.Application.Features.V1.Notifications.Commands.SendToAll
                 var notification = _mapper.Map<Notification>(request.NotificationModel);
                 await _unitOfWork.Notifications.CreateAsync(notification, cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
-                return ResponseHandler.Success<string>(message: "The message was sent successfully.");
+                return ResponseHandler.NoContent<string>(message: "The message was sent successfully.");
             }
             catch (Exception ex)
             {

@@ -34,7 +34,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.ResetPassword
                 IdentityResult result = await _unitOfWork.CharityUsers.UserManager.ResetPasswordAsync(user, token, request.ResetPassword.Password);
                 if (!result.Succeeded)
                     return ResponseHandler.Conflict<string>(errors: "Password change failed.");
-                return ResponseHandler.Success<string>(message: "Password changed successfully.");
+                return ResponseHandler.NoContent<string>(message: "Password changed successfully.");
 
             }
             catch (Exception ex)

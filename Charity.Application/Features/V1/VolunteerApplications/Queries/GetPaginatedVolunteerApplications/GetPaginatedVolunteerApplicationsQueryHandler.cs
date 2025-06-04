@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Charity.Application.Helper.ResponseServices;
 using Charity.Contracts.Repositories;
 using Charity.Models.ResponseModels;
 using Charity.Models.VolunteerApplication;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Charity.Application.Features.V1.VolunteerApplications.Queries.GetPaginatedVolunteerApplications
@@ -41,15 +43,17 @@ namespace Charity.Application.Features.V1.VolunteerApplications.Queries.GetPagin
                        pageSize: request.Pagination.PageSize,
                        totalCount: await _unitOfWork.VolunteerApplications.CountAsync(cancellationToken: cancellationToken));
 
-                var data = _mapper.Map<IEnumerable<VolunteerApplicationModel>>(volunteerApplications);
-                return ResponsePaginationHandler.Success(data: data,
+                var data = await volunteerApplications.ProjectTo<VolunteerApplicationModel>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+
+                return ResponsePaginationHandler.Success(data: data.AsEnumerable(),
                     pageNumber: request.Pagination.PageNumber,
                     pageSize: request.Pagination.PageSize,
                     totalCount: await _unitOfWork.VolunteerApplications.CountAsync(cancellationToken: cancellationToken));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while retrieving volunteer applications data.");
+                _logger.LogError(ex, "An error occurred while retrieving volunteer applications.");
                 return ResponsePaginationHandler.BadRequest<IEnumerable<VolunteerApplicationModel>>(errors: ex.Message);
             }
         }
