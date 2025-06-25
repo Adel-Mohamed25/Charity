@@ -23,6 +23,9 @@ namespace Charity.Persistence.Configurations
             builder.HasIndex(a => a.Status)
                 .HasDatabaseName("IX_AidDistribution_Status");
 
+            builder.Property(md => md.Amount)
+                .HasPrecision(10, 4);
+
             builder.HasOne(a => a.Beneficiary)
                 .WithMany(u => u.ReceivedAids)
                 .HasForeignKey(a => a.BeneficiaryId)

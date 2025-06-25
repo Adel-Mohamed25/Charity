@@ -4,7 +4,9 @@ using Charity.Application.Features.V1.Project.Commands.DeleteProject;
 using Charity.Application.Features.V1.Project.Commands.UpdateProject;
 using Charity.Application.Features.V1.Project.Queries.GetAllProjects;
 using Charity.Application.Features.V1.Project.Queries.GetPaginatedProjects;
+using Charity.Application.Features.V1.Project.Queries.GetPaginatedProjectsByStatus;
 using Charity.Application.Features.V1.Project.Queries.GetProjectById;
+using Charity.Domain.Enum;
 using Charity.Models.Project;
 using Charity.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +46,12 @@ namespace Charity.Api.Controllers.V1
         public async Task<IActionResult> GetPaginatedProjects([FromQuery] PaginationModel pagination)
         {
             return NewResult(await Mediator.Send(new GetPaginatedProjectsQuery(pagination)));
+        }
+
+        [HttpGet("GetPaginatedProjectsByStatus")]
+        public async Task<IActionResult> GetPaginatedProjectsByStatus([FromQuery] ProjectStatus status, [FromQuery] PaginationModel pagination)
+        {
+            return NewResult(await Mediator.Send(new GetPaginatedProjectsByStatusQuery(status, pagination)));
         }
 
         [HttpGet("GetProjectById")]

@@ -73,10 +73,10 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Register
                 var url = $"{_httpContextAccessor.HttpContext.Request.Scheme.Trim().ToLower()}://{_httpContextAccessor.HttpContext.Request.Host.ToUriComponent().Trim().ToLower()}/api/v1/Account/ConfirmEmail";
 
                 var parameters = new Dictionary<string, string>
-                    {
-                        {"Token", token },
-                        {"UserId", user.Id}
-                    };
+                {
+                    {"Token", token },
+                    {"UserId", user.Id}
+                };
 
                 var confirmationLink = new Uri(QueryHelpers.AddQueryString(url, parameters));
                 var sendEmailModel = new SendEmailRequest
@@ -109,7 +109,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Register
 
                 var emaiModel = await _unitOfService.EmailServices.SendEmailAsync(sendEmailModel);
                 if (emaiModel.IsSuccess)
-                    return ResponseHandler.NoContent<string>(message: "The account has been registered successfully.");
+                    return ResponseHandler.NoContent<string>(message: "The account has been registered successfully.", data: $"{user.EmailConfirmed}");
                 return ResponseHandler.BadRequest<string>(message: "Failed to send confirmation email");
             }
             catch (Exception ex)

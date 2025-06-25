@@ -3,6 +3,7 @@ using Charity.Application.Features.V1.Notifications.Commands.DeleteMessage;
 using Charity.Application.Features.V1.Notifications.Commands.MakeMessageIsRead;
 using Charity.Application.Features.V1.Notifications.Commands.SendToAll;
 using Charity.Application.Features.V1.Notifications.Commands.SendToUser;
+using Charity.Application.Features.V1.Notifications.Commands.SoftDeleteMessage;
 using Charity.Application.Features.V1.Notifications.Commands.UpdateMessage;
 using Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesByReceiveId;
 using Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesBySendId;
@@ -63,6 +64,12 @@ namespace Charity.Api.Controllers.V1
         public async Task<IActionResult> DeleteMessage([FromQuery] string messageId)
         {
             return NewResult(await Mediator.Send(new DeleteMessageCommand(messageId)));
+        }
+
+        [HttpDelete("SoftDeleteMessage")]
+        public async Task<IActionResult> SoftDeleteMessage([FromQuery] string messageId)
+        {
+            return NewResult(await Mediator.Send(new SoftDeleteMessageCommand(messageId)));
         }
 
         //[HttpPost("send-to-all-except")]

@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Charity.Application.Features.V1.Notifications.Commands.DeleteMessage
+namespace Charity.Application.Features.V1.Notifications.Commands.SoftDeleteMessage
 {
-    public class DeleteMessageCommandValidation
-        : AbstractValidator<DeleteMessageCommand>
+    public class SoftDeleteMessageCommandValidation : AbstractValidator<SoftDeleteMessageCommand>
     {
-        public DeleteMessageCommandValidation()
+        public SoftDeleteMessageCommandValidation()
         {
             ApplyValidationRules();
         }

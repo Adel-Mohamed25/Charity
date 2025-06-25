@@ -90,23 +90,6 @@ namespace Charity.Application.Helper.ResponseServices
             );
         }
 
-        public static Response<TData> Unauthorized<TData>(
-            TData data = null,
-            string message = null,
-            string meta = null,
-            string errors = null
-            ) where TData : class
-        {
-            return new Response<TData>(
-                statusCode: HttpStatusCode.Unauthorized,
-                issucceeded: false,
-                message: message ?? ResponseMessage.UnAuthorizedMessage,
-                meta: meta,
-                data: data,
-                errors: errors ?? "Unauthorized"
-            );
-        }
-
         public static Response<TData> Conflict<TData>(
             TData data = null,
             string message = null,
@@ -124,6 +107,39 @@ namespace Charity.Application.Helper.ResponseServices
             );
         }
 
+        public static Response<TData> Unauthorized<TData>(
+           TData data = null,
+           string message = null,
+           string meta = null,
+           string errors = null
+           ) where TData : class
+        {
+            return new Response<TData>(
+                statusCode: HttpStatusCode.Unauthorized,
+                issucceeded: false,
+                message: message ?? ResponseMessage.UnAuthorizedMessage,
+                meta: meta,
+                data: data,
+                errors: errors ?? "Unauthorized"
+            );
+        }
+
+        public static Response<TData> Forbidden<TData>(
+           TData data = null,
+           string message = null,
+           string meta = null,
+           string errors = null
+           ) where TData : class
+        {
+            return new Response<TData>(
+                statusCode: HttpStatusCode.Forbidden,
+                issucceeded: false,
+                message: message ?? ResponseMessage.ForbiddenMessage,
+                meta: meta,
+                data: data,
+                errors: errors ?? "Forbidden"
+            );
+        }
         public static Response<TData> InternalServerError<TData>(
             TData data = null,
             string message = null,

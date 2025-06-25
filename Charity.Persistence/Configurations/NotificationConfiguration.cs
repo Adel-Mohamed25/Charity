@@ -23,6 +23,12 @@ namespace Charity.Persistence.Configurations
             builder.HasIndex(n => n.SenderId)
                 .HasDatabaseName("IX_Notification_SenderId");
 
+            builder.HasIndex(n => n.IsRead)
+                .HasDatabaseName("IX_Notification_IsRead");
+
+            builder.HasIndex(n => n.IsDeleted)
+                .HasDatabaseName("IX_Notification_IsDeleted");
+
             builder.HasIndex(n => n.CreatedDate)
                 .HasDatabaseName("IX_Notification_CreatedDate");
 

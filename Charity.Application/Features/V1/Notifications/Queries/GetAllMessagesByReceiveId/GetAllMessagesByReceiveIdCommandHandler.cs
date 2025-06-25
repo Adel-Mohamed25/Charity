@@ -33,8 +33,8 @@ namespace Charity.Application.Features.V1.Notifications.Queries.GetAllMessagesBy
                 if (!await _unitOfWork.CharityUsers.IsExistAsync(u => u.Id.Equals(request.ReceiveId)))
                     return ResponseHandler.NotFound<IEnumerable<NotificationModel>>(message: "User not found.");
 
-                var messages = await _unitOfWork.Notifications.GetAllAsync(n => n.ReceiverId!.Equals(request.ReceiveId)
-                                                                  || n.ReceiverId == null,
+                var messages = await _unitOfWork.Notifications.GetAllAsync(n => (n.ReceiverId!.Equals(request.ReceiveId)
+                                                                  || n.ReceiverId == null) && !n.IsDeleted,
                                                                   orderBy: n => n.CreatedDate!,
                                                                   orderByDirection: OrderByDirection.Descending,
                                                                   cancellationToken: cancellationToken);

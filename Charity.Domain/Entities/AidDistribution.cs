@@ -16,6 +16,8 @@ namespace Charity.Domain.Entities
         public string VolunteerId { get; set; }
         public CharityUser Volunteer { get; set; }
         public string Description { get; set; }
+        public int? Quantity { get; set; }
+        public decimal? Amount { get; set; }
         public AidDistributionStatus Status { get; set; }
     }
 }

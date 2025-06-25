@@ -29,7 +29,6 @@ namespace Charity.Application.Features.V1.Notifications.Commands.MakeMessageIsRe
                     return ResponseHandler.NotFound<string>(message: "Message not found.");
 
                 message.IsRead = true;
-                message.ModifiedDate = DateTime.Now;
                 await _unitOfWork.Notifications.UpdateAsync(message, cancellationToken: cancellationToken);
                 await _unitOfWork.SaveChangesAsync(cancellationToken: cancellationToken);
                 return ResponseHandler.NoContent<string>(message: "The message has been read successfully.");

@@ -12,6 +12,7 @@ namespace Charity.Domain.Entities
         public CharityUser? Receiver { get; set; }
         public string? Message { get; set; }
         public bool IsRead { get; set; }
+        public bool IsDeleted { get; set; }
 
     }
 }

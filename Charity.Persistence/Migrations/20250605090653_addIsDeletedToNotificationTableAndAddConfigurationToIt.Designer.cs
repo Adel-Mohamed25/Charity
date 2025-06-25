@@ -4,6 +4,7 @@ using Charity.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Charity.Persistence.Migrations
 {
     [DbContext(typeof(CharityDbContext))]
-    partial class CharityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250605090653_addIsDeletedToNotificationTableAndAddConfigurationToIt")]
+    partial class addIsDeletedToNotificationTableAndAddConfigurationToIt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,10 +29,6 @@ namespace Charity.Persistence.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal?>("Amount")
-                        .HasPrecision(10, 4)
-                        .HasColumnType("decimal(10,4)");
 
                     b.Property<string>("BeneficiaryId")
                         .IsRequired()
@@ -51,9 +50,6 @@ namespace Charity.Persistence.Migrations
 
                     b.Property<string>("MonetaryDonationId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()

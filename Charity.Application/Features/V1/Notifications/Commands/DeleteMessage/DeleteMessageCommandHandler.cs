@@ -27,7 +27,7 @@ namespace Charity.Application.Features.V1.Notifications.Commands.DeleteMessage
         {
             try
             {
-                var notification = await _unitOfWork.Notifications.GetByAsync(n => n.Id.Equals(request.messageId),
+                var notification = await _unitOfWork.Notifications.GetByAsync(n => n.Id.Equals(request.MessageId),
                     cancellationToken: cancellationToken);
 
                 if (notification == null)

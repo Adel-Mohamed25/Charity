@@ -53,7 +53,7 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Login
 
                 var findUser = await _unitOfWork.CharityUsers.UserManager.FindByEmailAsync(request.loginModel.Email);
                 if (findUser == null)
-                    return ResponseHandler.NotFound<AuthModel>(errors: "User not found");
+                    return ResponseHandler.NotFound<AuthModel>(errors: "هذا المستخدم غير موجود");
 
                 if (await _unitOfWork.CharityUsers.UserManager.IsLockedOutAsync(findUser))
                 {
@@ -78,6 +78,11 @@ namespace Charity.Application.Features.V1.Authentication.Commands.Login
 
 
                 await _unitOfWork.CharityUsers.UserManager.ResetAccessFailedCountAsync(findUser);
+
+                if (!findUser.EmailConfirmed)
+                {
+                    return ResponseHandler.Forbidden<AuthModel>(message: "This email has not been confirmed.");
+                }
 
                 var user = await _unitOfWork.CharityUsers.GetByAsync(
                    mandatoryFilter: u => u.Id == findUser.Id,

@@ -11,5 +11,8 @@ namespace Charity.Models.AidDistribution
         public string VolunteerId { get; set; }
         public string Description { get; set; }
         public AidDistributionStatus Status { get; set; }
+
+        public int? Quantity { get; set; }
+        public decimal? Amount { get; set; }
     }
 }

@@ -41,7 +41,8 @@ namespace Charity.Application.Features.V1.Authentication.Commands.ConfirmEmail
 
                     string successHtml = ConfirmEmailFormat.GenerateHtmlContent(
                         "✅ تم تأكيد البريد الإلكتروني بنجاح!",
-                        "#2ecc71"
+                        "#2ecc71",
+                        "<a href='https://charity-project-delta.vercel.app/login' class='button'> الذهاب لتسجيل الدخول</a>"
                     );
                     return new ContentResult
                     {
